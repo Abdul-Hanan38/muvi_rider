@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "43355585191",
+    "firebase_url": "https://restar-8b8f2-default-rtdb.firebaseio.com",
+    "project_id": "restar-8b8f2",
+    "storage_bucket": "restar-8b8f2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43355585191:android:8bba5f520528b2eaa8f982",
+        "android_client_info": {
+          "package_name": "com.muviperu.driverapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu4UfZfpGHAAOAwukjK8Jkp-he5EwChJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43355585191:android:62a6e7ca71d03210a8f982",
+        "android_client_info": {
+          "package_name": "com.muviperu.userapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu4UfZfpGHAAOAwukjK8Jkp-he5EwChJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
