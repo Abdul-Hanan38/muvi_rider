@@ -472,18 +472,44 @@ class AcceptRejectWidget extends StatelessWidget {
                 ),
 
                 // Card 3: Timeline & Addresses
+                // Card 3: Timeline & Addresses
                 buildPremiumCard(
                   child: Builder(builder: (context) {
                     final List<Map<String, dynamic>> addressItems = [];
+
+                    // Safely extract instruction strings[cite: 7]
+                    String pickupInstruction = '';
+                    String dropoffInstruction = '';
+                    if (userData!.metaRequest!.pickPocInstruction != null &&
+                        userData!.metaRequest!.pickPocInstruction
+                            .toString()
+                            .trim()
+                            .isNotEmpty) {
+                      pickupInstruction =
+                          userData!.metaRequest!.pickPocInstruction.toString();
+                    }
+                    if (userData!.metaRequest!.dropPocInstruction != null &&
+                        userData!.metaRequest!.dropPocInstruction
+                            .toString()
+                            .trim()
+                            .isNotEmpty) {
+                      dropoffInstruction =
+                          userData!.metaRequest!.dropPocInstruction.toString();
+                    }
+
+                    // 1. Add Pickup
                     addressItems.add({
                       'title': 'Pickup',
                       'address': userData!.metaRequest!.pickAddress,
                       'isPickup': true,
+                      'instruction':
+                          pickupInstruction, // 👈 Attached instruction here
                       'color': isDark
                           ? const Color(0xFF34D399)
                           : const Color(0xFF10B981),
                     });
 
+                    // 2. Add Stops
                     if (userData!.metaRequest!.requestStops.isNotEmpty) {
                       for (var i = 0;
                           i < userData!.metaRequest!.requestStops.length;
@@ -493,6 +519,7 @@ class AcceptRejectWidget extends StatelessWidget {
                           'address': userData!.metaRequest!.requestStops[i]
                               ['address'],
                           'isPickup': false,
+                          'instruction': '',
                           'color': isDark
                               ? const Color(0xFF9CA3AF)
                               : const Color(0xFF6B7280),
@@ -500,12 +527,15 @@ class AcceptRejectWidget extends StatelessWidget {
                       }
                     }
 
+                    // 3. Add Drop
                     if (userData!.metaRequest!.requestStops.isEmpty &&
                         userData!.metaRequest!.dropAddress != null) {
                       addressItems.add({
                         'title': 'Drop',
                         'address': userData!.metaRequest!.dropAddress,
                         'isPickup': false,
+                        'instruction':
+                            dropoffInstruction, // 👈 Attached instruction here
                         'color': AppColors.red,
                       });
                     }
@@ -515,6 +545,9 @@ class AcceptRejectWidget extends StatelessWidget {
                         final item = addressItems[index];
                         final bool isLast = index == addressItems.length - 1;
                         final bool isPickup = item['isPickup'] ?? false;
+                        final String instructionText =
+                            item['instruction'] ?? '';
+
                         return IntrinsicHeight(
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -595,6 +628,48 @@ class AcceptRejectWidget extends StatelessWidget {
                                       ),
                                       maxLines: 3,
                                     ),
+
+                                    // 🚀 NEW INLINE INSTRUCTIONS BLOCK:
+                                    if (instructionText.isNotEmpty) ...[
+                                      const SizedBox(height: 6),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          color: isDark
+                                              ? Colors.black.withOpacity(0.2)
+                                              : item['color'].withOpacity(0.06),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Icon(
+                                              Icons.notes_rounded,
+                                              size: 14,
+                                              color: item['color'],
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Expanded(
+                                              child: MyText(
+                                                maxLines: 5,
+                                                overflow: TextOverflow.visible,
+                                                text: instructionText,
+                                                textStyle: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: isDark
+                                                      ? const Color(0xFF9CA3AF)
+                                                      : const Color(0xFF4B5563),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                     const SizedBox(height: 16),
                                   ],
                                 ),
@@ -663,7 +738,7 @@ class AcceptRejectWidget extends StatelessWidget {
                   ),
 
                 // Card 5: Preferences & instructions (Production-Ready Universal Method)
-                _buildPreferencesAndInstructionsCard(context, isDark),
+                // _buildPreferencesAndInstructionsCard(context, isDark),
 
                 // Countdown Auto-cancel Warning Banner
                 Container(

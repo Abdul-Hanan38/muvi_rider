@@ -80,6 +80,13 @@ class _LoaderPageState extends State<LoaderPage> with WidgetsBindingObserver {
                         ? Theme.of(context).primaryColor
                         : Theme.of(context).scaffoldBackgroundColor,
                 resizeToAvoidBottomInset: false,
+                appBar: AppBar(
+                  backgroundColor: Colors
+                      .transparent, // Makes the bar background see-through
+                  elevation: 0, // Removes any top casting drop-shadows
+                  toolbarHeight:
+                      0, // Keeps it completely invisible to the layout
+                ),
                 body: Padding(
                   padding: EdgeInsets.all(size.width * 0.05),
                   child: Center(
