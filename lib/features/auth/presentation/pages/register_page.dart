@@ -163,7 +163,112 @@ class RegisterPage extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(height: 28),
+                                  const SizedBox(height: 20),
+
+                                  // Profile Picture Section
+                                  Center(
+                                    child: Stack(
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              width: 2,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black
+                                                    .withOpacity(0.08),
+                                                blurRadius: 8,
+                                                offset: const Offset(0, 3),
+                                              ),
+                                            ],
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            child: context
+                                                    .read<AuthBloc>()
+                                                    .profileImage
+                                                    .isNotEmpty
+                                                ? Image.file(
+                                                    File(context
+                                                        .read<AuthBloc>()
+                                                        .profileImage),
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder: (context,
+                                                            error,
+                                                            stackTrace) =>
+                                                        Image.asset(
+                                                      AppImages.defaultProfile,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  )
+                                                : Image.asset(
+                                                    AppImages.defaultProfile,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            _showImageSourceSheet(context);
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(4),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withOpacity(0.15),
+                                                  blurRadius: 4,
+                                                  offset: const Offset(0, 2),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Container(
+                                              height: 32,
+                                              width: 32,
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: AppColors.primary,
+                                              ),
+                                              child: const Center(
+                                                child: Icon(
+                                                  Icons.camera_alt,
+                                                  size: 18,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Center(
+                                    child: MyText(
+                                      text: AppLocalizations.of(context)!
+                                          .addProfilePhoto,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                            color: Theme.of(context).hintColor,
+                                            fontSize: 13,
+                                          ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+
                                   // Personal Information Card Container
                                   Container(
                                     width: double.infinity,
@@ -297,42 +402,6 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  Widget buildProfilePick(Size size, BuildContext context) {
-    return Center(
-      child: CircleAvatar(
-        radius: size.width * 0.15,
-        backgroundColor: Theme.of(context).dividerColor,
-        backgroundImage: context.read<AuthBloc>().profileImage.isNotEmpty
-            ? FileImage(File(context.read<AuthBloc>().profileImage))
-            : const AssetImage(AppImages.defaultProfile),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  onTap: () {
-                    _showImageSourceSheet(context);
-                  },
-                  child: Container(
-                    height: size.width * 0.1,
-                    width: size.width * 0.1,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                    ),
-                    child: const Center(child: Icon(Icons.edit)),
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget buildButton(BuildContext context) {
     return Center(
       child: CustomButton(
@@ -356,6 +425,73 @@ class RegisterPage extends StatelessWidget {
                 profileImage: context.read<AuthBloc>().profileImage));
           }
         },
+      ),
+    );
+  }
+
+  void _showImageSourceSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Theme.of(context).splashColor,
+      builder: (_) => Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+            boxShadow: [
+              BoxShadow(
+                  color: Theme.of(context).shadowColor,
+                  blurRadius: 1,
+                  spreadRadius: 1)
+            ]),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(
+                Icons.camera_alt,
+                size: 20,
+                color: Theme.of(context).primaryColorDark,
+              ),
+              title: MyText(
+                text: AppLocalizations.of(context)!.camera,
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: Theme.of(context).primaryColorDark),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                context
+                    .read<AuthBloc>()
+                    .add(ImageUpdateEvent(source: ImageSource.camera));
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.photo_library,
+                size: 20,
+                color: Theme.of(context).primaryColorDark,
+              ),
+              title: MyText(
+                text: AppLocalizations.of(context)!.gallery,
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: Theme.of(context).primaryColorDark),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                context
+                    .read<AuthBloc>()
+                    .add(ImageUpdateEvent(source: ImageSource.gallery));
+              },
+            ),
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height * 0.08,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -681,73 +817,6 @@ class RegisterPage extends StatelessWidget {
           return null;
         }
       },
-    );
-  }
-
-  void _showImageSourceSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Theme.of(context).splashColor,
-      builder: (_) => Container(
-        decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-            boxShadow: [
-              BoxShadow(
-                  color: Theme.of(context).shadowColor,
-                  blurRadius: 1,
-                  spreadRadius: 1)
-            ]),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: Icon(
-                Icons.camera_alt,
-                size: 20,
-                color: Theme.of(context).primaryColorDark,
-              ),
-              title: MyText(
-                text: AppLocalizations.of(context)!.camera,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: Theme.of(context).primaryColorDark),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                context
-                    .read<AuthBloc>()
-                    .add(ImageUpdateEvent(source: ImageSource.camera));
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.photo_library,
-                size: 20,
-                color: Theme.of(context).primaryColorDark,
-              ),
-              title: MyText(
-                text: AppLocalizations.of(context)!.gallery,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: Theme.of(context).primaryColorDark),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                context
-                    .read<AuthBloc>()
-                    .add(ImageUpdateEvent(source: ImageSource.gallery));
-              },
-            ),
-            SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.08,
-            )
-          ],
-        ),
-      ),
     );
   }
 }
