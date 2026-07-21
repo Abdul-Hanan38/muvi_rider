@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:restart_tagxi/common/app_constants.dart';
@@ -71,106 +72,134 @@ class _LoaderPageState extends State<LoaderPage> with WidgetsBindingObserver {
         },
         child: BlocBuilder<LoaderBloc, LoaderState>(
           builder: (context, state) {
-            return PopScope(
-              canPop: false,
-              child: Scaffold(
-                backgroundColor:
-                    (context.read<LoaderBloc>().locationApproved == null ||
-                            context.read<LoaderBloc>().locationApproved == true)
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).scaffoldBackgroundColor,
-                resizeToAvoidBottomInset: false,
-                appBar: AppBar(
-                  backgroundColor: Colors
-                      .transparent, // Makes the bar background see-through
-                  elevation: 0, // Removes any top casting drop-shadows
-                  toolbarHeight:
-                      0, // Keeps it completely invisible to the layout
-                ),
-                body: Padding(
-                  padding: EdgeInsets.all(size.width * 0.05),
-                  child: Center(
-                    child: (context.read<LoaderBloc>().locationApproved ==
-                                null ||
-                            context.read<LoaderBloc>().locationApproved == true)
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                AppImages.loader,
-                                width: size.width * 0.51,
-                                height: size.height * 0.51,
-                              )
-                            ],
+            final isLoaderState =
+                (context.read<LoaderBloc>().locationApproved == null ||
+                    context.read<LoaderBloc>().locationApproved == true);
+
+            return AnnotatedRegion<SystemUiOverlayStyle>(
+              value: const SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: Brightness.light,
+                statusBarBrightness: Brightness.dark,
+              ),
+              child: PopScope(
+                canPop: false,
+                child: Scaffold(
+                  extendBodyBehindAppBar: true,
+                  backgroundColor: isLoaderState
+                      ? Colors.transparent
+                      : Theme.of(context).scaffoldBackgroundColor,
+                  resizeToAvoidBottomInset: false,
+                  appBar: AppBar(
+                    backgroundColor: Colors.transparent,
+                    surfaceTintColor: Colors.transparent,
+                    elevation: 0,
+                    toolbarHeight: 0,
+                  ),
+                  body: Container(
+                    width: size.width,
+                    height: size.height,
+                    decoration: isLoaderState
+                        ? BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Theme.of(context).primaryColor,
+                                AppColors.secondary,
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
                           )
-                        : (context.read<LoaderBloc>().locationApproved == false)
+                        : null,
+                    child: Padding(
+                      padding: EdgeInsets.all(size.width * 0.05),
+                      child: Center(
+                        child: (context.read<LoaderBloc>().locationApproved ==
+                                    null ||
+                                context.read<LoaderBloc>().locationApproved ==
+                                    true)
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    AppImages.locationImage,
-                                    width: size.width * 0.9,
-                                    height: size.width * 0.9,
-                                    fit: BoxFit.contain,
-                                  ),
-                                  SizedBox(height: size.width * 0.05),
-                                  SizedBox(
-                                    width: size.width * 0.9,
-                                    child: MyText(
-                                      text: AppLocalizations.of(context)!
-                                          .whyBackgroundLocation,
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold),
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  SizedBox(height: size.width * 0.05),
-                                  SizedBox(
-                                    width: size.width * 0.9,
-                                    child: MyText(
-                                      text: AppLocalizations.of(context)!
-                                          .locationPermDesc
-                                          .replaceAll(
-                                              '111', AppConstants.title),
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                            color: const Color(0xff5D5F62),
-                                            fontSize: 16,
-                                          ),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 10,
-                                    ),
-                                  ),
-                                  SizedBox(height: size.width * 0.05),
-                                  SizedBox(height: size.width * 0.2),
-                                  CustomButton(
-                                      buttonName: AppLocalizations.of(context)!
-                                          .continueText,
-                                      width: size.width,
-                                      textSize: 16,
-                                      borderRadius: 10,
-                                      onTap: () async {
-                                        await Permission.location.request();
-                                        await Permission.locationAlways
-                                            .request()
-                                            .whenComplete(
-                                          () async {
-                                            context
-                                                .read<LoaderBloc>()
-                                                .add(LoaderGetLocalDataEvent());
-                                          },
-                                        );
-                                      })
+                                    AppImages.loader,
+                                    width: size.width * 0.51,
+                                    height: size.height * 0.51,
+                                  )
                                 ],
                               )
-                            : Container(),
+                            : (context.read<LoaderBloc>().locationApproved ==
+                                    false)
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        AppImages.locationImage,
+                                        width: size.width * 0.9,
+                                        height: size.width * 0.9,
+                                        fit: BoxFit.contain,
+                                      ),
+                                      SizedBox(height: size.width * 0.05),
+                                      SizedBox(
+                                        width: size.width * 0.9,
+                                        child: MyText(
+                                          text: AppLocalizations.of(context)!
+                                              .whyBackgroundLocation,
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold),
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      SizedBox(height: size.width * 0.05),
+                                      SizedBox(
+                                        width: size.width * 0.9,
+                                        child: MyText(
+                                          text: AppLocalizations.of(context)!
+                                              .locationPermDesc
+                                              .replaceAll(
+                                                  '111', AppConstants.title),
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                color: const Color(0xff5D5F62),
+                                                fontSize: 16,
+                                              ),
+                                          textAlign: TextAlign.center,
+                                          maxLines: 10,
+                                        ),
+                                      ),
+                                      SizedBox(height: size.width * 0.05),
+                                      SizedBox(height: size.width * 0.2),
+                                      CustomButton(
+                                        buttonName:
+                                            AppLocalizations.of(context)!
+                                                .continueText,
+                                        width: size.width,
+                                        textSize: 16,
+                                        borderRadius: 10,
+                                        onTap: () async {
+                                          await Permission.location.request();
+                                          await Permission.locationAlways
+                                              .request()
+                                              .whenComplete(
+                                            () async {
+                                              context.read<LoaderBloc>().add(
+                                                  LoaderGetLocalDataEvent());
+                                            },
+                                          );
+                                        },
+                                      )
+                                    ],
+                                  )
+                                : Container(),
+                      ),
+                    ),
                   ),
                 ),
               ),
