@@ -3086,4 +3086,7 @@ class AppLocalizationsSq extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Zgjidhni gjuhën tuaj të preferuar';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

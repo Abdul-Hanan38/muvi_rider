@@ -2929,4 +2929,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => '원하는 언어를 선택하세요';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

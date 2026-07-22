@@ -3041,4 +3041,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'زبان مورد نظر خود را انتخاب کنید';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

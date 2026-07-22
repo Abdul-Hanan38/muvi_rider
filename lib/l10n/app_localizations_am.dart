@@ -2962,4 +2962,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'የመረጡትን ቋንቋ ይምረጡ';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

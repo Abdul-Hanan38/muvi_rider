@@ -962,5 +962,6 @@
     "invoiceNoDataSubText": "No active trip summary data found.",
     "invoiceRequestIdCopiedText": "Request ID copied to clipboard",
     "reviewTapStarToRate": "Tap a star to rate",
-    "chooseLanguageSubText": "Select your preferred language"
+    "chooseLanguageSubText": "Select your preferred language",
+    "pleaseSelectImage": "Please select image"
 }

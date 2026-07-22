@@ -3071,4 +3071,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Selecteer uw voorkeurstaal';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

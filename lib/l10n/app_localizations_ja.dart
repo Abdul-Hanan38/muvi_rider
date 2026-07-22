@@ -2930,4 +2930,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'ご希望の言語を選択してください';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

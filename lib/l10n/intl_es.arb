@@ -963,5 +963,6 @@
     "invoiceNoDataSubText": "No se encontraron datos de resumen de viaje activos.",
     "invoiceRequestIdCopiedText": "ID de solicitud copiado al portapapeles",
     "reviewTapStarToRate": "Toca una estrella para calificar",
-    "chooseLanguageSubText": "Seleccione su idioma preferido"
+    "chooseLanguageSubText": "Seleccione su idioma preferido",
+    "pleaseSelectImage": "Por favor, seleccione una imagen"
 }

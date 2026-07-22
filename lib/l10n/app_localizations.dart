@@ -5933,6 +5933,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select your preferred language'**
   String get chooseLanguageSubText;
+
+  /// No description provided for @pleaseSelectImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select image'**
+  String get pleaseSelectImage;
 }
 
 class _AppLocalizationsDelegate

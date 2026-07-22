@@ -3071,4 +3071,7 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Seçdiyiniz dili seçin';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

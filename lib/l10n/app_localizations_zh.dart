@@ -2905,4 +2905,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => '请选择您偏好的语言';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

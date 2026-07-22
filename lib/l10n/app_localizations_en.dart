@@ -3033,4 +3033,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Select your preferred language';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

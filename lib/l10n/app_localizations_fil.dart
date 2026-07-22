@@ -3105,4 +3105,7 @@ class AppLocalizationsFil extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Piliin ang iyong gustong wika';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

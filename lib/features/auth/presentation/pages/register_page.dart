@@ -6,6 +6,7 @@ import '../../../../common/common.dart';
 import '../../../../core/model/user_detail_model.dart';
 import '../../../../core/utils/custom_button.dart';
 import '../../../../core/utils/custom_loader.dart';
+import '../../../../core/utils/custom_snack_bar.dart';
 import '../../../../core/utils/custom_text.dart';
 import '../../../../core/utils/custom_textfield.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -329,9 +330,10 @@ class RegisterPage extends StatelessWidget {
                                         const SizedBox(height: 8),
                                         buildMobileField(context, size),
                                         const SizedBox(height: 20),
+                                        // 🚀 Email Title Updated from Optional to Standard Required Field
                                         MyText(
                                           text: AppLocalizations.of(context)!
-                                              .signupEmailAddressOptional,
+                                              .email,
                                           textStyle: Theme.of(context)
                                               .textTheme
                                               .bodyMedium!
@@ -412,17 +414,25 @@ class RegisterPage extends StatelessWidget {
         width: MediaQuery.sizeOf(context).width,
         isLoader: context.read<AuthBloc>().isLoading,
         onTap: () {
-          if (context.read<AuthBloc>().formKey.currentState!.validate() &&
-              !context.read<AuthBloc>().isLoading) {
-            context.read<AuthBloc>().add(RegisterUserEvent(
-                userName: context.read<AuthBloc>().rUserNameController.text,
-                mobileNumber: context.read<AuthBloc>().rMobileController.text,
-                emailAddress: context.read<AuthBloc>().rEmailController.text,
-                password: context.read<AuthBloc>().rPasswordController.text,
-                countryCode: context.read<AuthBloc>().countryCode,
-                gender: context.read<AuthBloc>().selectedGender,
+          final authBloc = context.read<AuthBloc>();
+
+          //  Check if Profile Picture is uploaded
+          if (authBloc.profileImage.isEmpty) {
+            showToast(message: AppLocalizations.of(context)!.pleaseSelectImage);
+            return;
+          }
+
+          if (authBloc.formKey.currentState!.validate() &&
+              !authBloc.isLoading) {
+            authBloc.add(RegisterUserEvent(
+                userName: authBloc.rUserNameController.text,
+                mobileNumber: authBloc.rMobileController.text,
+                emailAddress: authBloc.rEmailController.text,
+                password: authBloc.rPasswordController.text,
+                countryCode: authBloc.countryCode,
+                gender: authBloc.selectedGender,
                 loginAs: arg.loginAs,
-                profileImage: context.read<AuthBloc>().profileImage));
+                profileImage: authBloc.profileImage));
           }
         },
       ),
@@ -590,8 +600,11 @@ class RegisterPage extends StatelessWidget {
         color: Theme.of(context).hintColor,
         size: 20,
       ),
+      // 🚀 Updated Validator to enforce compulsory email entry & format check
       validator: (value) {
-        if (value!.isNotEmpty && !AppValidation.emailValidate(value)) {
+        if (value == null || value.trim().isEmpty) {
+          return AppLocalizations.of(context)!.enterYourEmail;
+        } else if (!AppValidation.emailValidate(value.trim())) {
           return AppLocalizations.of(context)!.enterValidEmail;
         } else {
           return null;

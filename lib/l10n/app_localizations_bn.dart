@@ -3075,4 +3075,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'আপনার পছন্দের ভাষা নির্বাচন করুন';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }

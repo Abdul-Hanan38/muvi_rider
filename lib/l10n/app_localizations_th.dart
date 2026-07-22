@@ -3041,4 +3041,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'เลือกภาษาที่คุณต้องการ';
+
+  @override
+  String get pleaseSelectImage => 'Please select image';
 }
