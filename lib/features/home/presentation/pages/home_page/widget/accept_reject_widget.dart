@@ -79,7 +79,7 @@ class AcceptRejectWidget extends StatelessWidget {
                 ConstrainedBox(
                   constraints: BoxConstraints(
                     maxHeight: size.height *
-                        0.42, //  Limits sheet height to 38% of screen height
+                        0.43, //  Limits sheet height to 38% of screen height
                   ),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
@@ -515,7 +515,6 @@ class AcceptRejectWidget extends StatelessWidget {
                         ),
 
                         // Card 3: Timeline & Addresses
-                        // Card 3: Timeline & Addresses
                         buildPremiumCard(
                           child: Builder(builder: (context) {
                             final List<Map<String, dynamic>> addressItems = [];
@@ -736,7 +735,7 @@ class AcceptRejectWidget extends StatelessWidget {
                                                 ),
                                               ),
                                             ],
-                                            const SizedBox(height: 16),
+                                            SizedBox(height: size.width * 0.01),
                                           ],
                                         ),
                                       ),
