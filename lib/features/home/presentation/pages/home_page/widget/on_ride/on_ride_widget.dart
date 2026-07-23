@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -157,16 +158,26 @@ class OnRideWidget extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 8),
-                              MyText(
-                                text:
-                                    '${(Duration(seconds: (context.read<HomeBloc>().waitingTimeBeforeStart + context.read<HomeBloc>().waitingTimeAfterStart)).inHours.toString().padLeft(2, '0'))} : ${((Duration(seconds: (context.read<HomeBloc>().waitingTimeBeforeStart + context.read<HomeBloc>().waitingTimeAfterStart)).inMinutes - (Duration(seconds: (context.read<HomeBloc>().waitingTimeBeforeStart + context.read<HomeBloc>().waitingTimeAfterStart)).inHours * 60)).toString().padLeft(2, '0'))} min',
-                                textStyle: TextStyle(
-                                  color: isDark
-                                      ? AppColors.secondary
-                                      : AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
-                                ),
+                              // MyText(
+                              //   text:
+                              //       '${(Duration(seconds: (context.read<HomeBloc>().waitingTimeBeforeStart + context.read<HomeBloc>().waitingTimeAfterStart)).inHours.toString().padLeft(2, '0'))} : ${((Duration(seconds: (context.read<HomeBloc>().waitingTimeBeforeStart + context.read<HomeBloc>().waitingTimeAfterStart)).inMinutes - (Duration(seconds: (context.read<HomeBloc>().waitingTimeBeforeStart + context.read<HomeBloc>().waitingTimeAfterStart)).inHours * 60)).toString().padLeft(2, '0'))} min',
+                              //   textStyle: TextStyle(
+                              //     color: isDark
+                              //         ? AppColors.secondary
+                              //         : AppColors.primary,
+                              //     fontWeight: FontWeight.bold,
+                              //     fontSize: 24,
+                              //   ),
+                              // ),
+
+                              LiveWaitingTimeText(
+                                initialSeconds: context
+                                        .read<HomeBloc>()
+                                        .waitingTimeBeforeStart +
+                                    context
+                                        .read<HomeBloc>()
+                                        .waitingTimeAfterStart,
+                                isDark: isDark,
                               ),
                             ],
                           ),
@@ -1095,5 +1106,72 @@ class VerticalDashedLinePainter extends CustomPainter {
         oldDelegate.strokeWidth != strokeWidth ||
         oldDelegate.dashHeight != dashHeight ||
         oldDelegate.dashSpace != dashSpace;
+  }
+}
+
+class LiveWaitingTimeText extends StatefulWidget {
+  final int initialSeconds;
+  final bool isDark;
+
+  const LiveWaitingTimeText({
+    super.key,
+    required this.initialSeconds,
+    required this.isDark,
+  });
+
+  @override
+  State<LiveWaitingTimeText> createState() => _LiveWaitingTimeTextState();
+}
+
+class _LiveWaitingTimeTextState extends State<LiveWaitingTimeText> {
+  Timer? _ticker;
+  late int _currentSeconds;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentSeconds = widget.initialSeconds;
+    _startTimer();
+  }
+
+  @override
+  void didUpdateWidget(covariant LiveWaitingTimeText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialSeconds != widget.initialSeconds) {
+      _currentSeconds = widget.initialSeconds;
+    }
+  }
+
+  void _startTimer() {
+    _ticker?.cancel();
+    _ticker = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() {
+          _currentSeconds++;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _ticker?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final duration = Duration(seconds: _currentSeconds);
+    final minutes = duration.inMinutes.toString().padLeft(2, '0');
+    final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+
+    return MyText(
+      text: '$minutes min : $seconds sec',
+      textStyle: TextStyle(
+        color: widget.isDark ? AppColors.secondary : AppColors.primary,
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+      ),
+    );
   }
 }
