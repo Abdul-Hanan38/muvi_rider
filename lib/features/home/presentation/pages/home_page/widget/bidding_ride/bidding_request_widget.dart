@@ -35,6 +35,35 @@ class BiddingRequestWidget extends StatelessWidget {
           final homeBloc = context.read<HomeBloc>();
 
           double rawPrice = 0.0;
+          final Map rideData = homeBloc.rideList.isNotEmpty
+              ? homeBloc.rideList.firstWhere(
+                  (e) => e['request_id'] == homeBloc.choosenRide)
+              : {};
+
+          String instructionFrom(List<String> keys) {
+            for (final key in keys) {
+              final value = rideData[key]?.toString().trim() ?? '';
+              if (value.isNotEmpty && value.toLowerCase() != 'null') {
+                return value;
+              }
+            }
+            return '';
+          }
+
+          final pickupInstruction = instructionFrom([
+            'pick_poc_instruction',
+            'pickup_poc_instruction',
+            'pickPocInstruction',
+            'pickupPocInstruction',
+            'taxi_instruction',
+          ]);
+          final dropoffInstruction = instructionFrom([
+            'drop_poc_instruction',
+            'dropoff_poc_instruction',
+            'dropPocInstruction',
+            'dropoffPocInstruction',
+          ]);
+
           if (homeBloc.rideList.isNotEmpty) {
             rawPrice = double.tryParse(
                     '${homeBloc.rideList.firstWhere((e) => e['request_id'] == homeBloc.choosenRide)['price']}') ??
@@ -191,7 +220,7 @@ class BiddingRequestWidget extends StatelessWidget {
                             // ADDED: Instructions Section (Pickup & Dropoff)
                             // ============================================================
                             // Display pickup instruction if available
-                            Builder(builder: (context) {
+                            if (false) Builder(builder: (context) {
                               // Get the ride data
                               final rideData = homeBloc.rideList.firstWhere(
                                   (e) =>
@@ -408,57 +437,6 @@ class BiddingRequestWidget extends StatelessWidget {
                             ],
                           ),
                         ),
-                        if ((context
-                                    .read<HomeBloc>()
-                                    .rideList
-                                    .firstWhere((e) =>
-                                        e['request_id'] ==
-                                        homeBloc.choosenRide)['transport_type']
-                                    .toString() ==
-                                'delivery') &&
-                            context
-                                .read<HomeBloc>()
-                                .rideList
-                                .firstWhere((e) =>
-                                    e['request_id'] ==
-                                    homeBloc
-                                        .choosenRide)['pick_poc_instruction']
-                                .toString()
-                                .isNotEmpty) ...[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: size.width * 0.02),
-                              SizedBox(
-                                width: size.width * 0.8,
-                                child: MyText(
-                                  text:
-                                      '${AppLocalizations.of(context)!.instruction}: ',
-                                  textStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              SizedBox(height: size.width * 0.01),
-                              SizedBox(
-                                width: size.width * 0.8,
-                                child: MyText(
-                                    text: context
-                                            .read<HomeBloc>()
-                                            .rideList
-                                            .firstWhere((e) =>
-                                                e['request_id'] ==
-                                                homeBloc.choosenRide)[
-                                        'pick_poc_instruction'],
-                                    maxLines: 5,
-                                    textStyle:
-                                        Theme.of(context).textTheme.bodySmall),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: size.width * 0.01),
-                        ],
                         (stops.isEmpty)
                             ? Column(
                                 children: [
@@ -670,6 +648,56 @@ class BiddingRequestWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: size.width * 0.05),
+                if (pickupInstruction.isNotEmpty ||
+                    dropoffInstruction.isNotEmpty) ...[
+                  Container(
+                    width: size.width * 0.9,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.04,
+                      vertical: size.width * 0.03,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .primaryColor
+                          .withAlpha((0.08 * 255).round()),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Theme.of(context)
+                            .primaryColor
+                            .withAlpha((0.3 * 255).round()),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        MyText(
+                          text: AppLocalizations.of(context)!.instruction,
+                          textStyle:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        if (pickupInstruction.isNotEmpty) ...[
+                          const SizedBox(height: 6),
+                          MyText(
+                            text: pickupInstruction,
+                            maxLines: 5,
+                            textStyle: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                        if (dropoffInstruction.isNotEmpty) ...[
+                          const SizedBox(height: 6),
+                          MyText(
+                            text: dropoffInstruction,
+                            maxLines: 5,
+                            textStyle: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: size.width * 0.04),
+                ],
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
