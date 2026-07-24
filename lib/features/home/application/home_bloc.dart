@@ -132,6 +132,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   int waitingTimeBeforeStart = 0;
   int waitingTimeAfterStart = 0;
+  bool waitingTimeDisplayRunning = false;
   Animation<double>? _animation;
   AnimationController? animationController;
   final debouncer = Debouncer(milliseconds: 1000);
@@ -1465,6 +1466,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
 
         if (userData!.onTripRequest == null) {
+          waitingTimeDisplayRunning = false;
           if (userData!.onTripRequest == null &&
               userData!.metaRequest == null) {
             addReview = false;
@@ -2555,6 +2557,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
       (success) async {
         isLoading = false;
+        waitingTimeDisplayRunning = false;
         showOtp = false;
         showImagePick = false;
         audioPlayer.play(AssetSource(AppAudios.started));
@@ -2797,6 +2800,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   waitingTime() async {
     waitingTimer?.cancel();
+    waitingTimeDisplayRunning = userData?.onTripRequest?.isTripStart == 0;
     LatLng? lastLatLng;
     var val = await FirebaseDatabase.instance
         .ref('requests/${userData!.onTripRequest!.id}')

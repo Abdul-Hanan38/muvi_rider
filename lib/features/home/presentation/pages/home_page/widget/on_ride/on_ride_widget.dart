@@ -177,6 +177,9 @@ class OnRideWidget extends StatelessWidget {
                                     context
                                         .read<HomeBloc>()
                                         .waitingTimeAfterStart,
+                                isRunning: context
+                                    .read<HomeBloc>()
+                                    .waitingTimeDisplayRunning,
                                 isDark: isDark,
                               ),
                             ],
@@ -1111,11 +1114,13 @@ class VerticalDashedLinePainter extends CustomPainter {
 
 class LiveWaitingTimeText extends StatefulWidget {
   final int initialSeconds;
+  final bool isRunning;
   final bool isDark;
 
   const LiveWaitingTimeText({
     super.key,
     required this.initialSeconds,
+    required this.isRunning,
     required this.isDark,
   });
 
@@ -1131,14 +1136,22 @@ class _LiveWaitingTimeTextState extends State<LiveWaitingTimeText> {
   void initState() {
     super.initState();
     _currentSeconds = widget.initialSeconds;
-    _startTimer();
+    if (widget.isRunning) {
+      _startTimer();
+    }
   }
 
   @override
   void didUpdateWidget(covariant LiveWaitingTimeText oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.initialSeconds != widget.initialSeconds) {
+    if (widget.initialSeconds > _currentSeconds) {
       _currentSeconds = widget.initialSeconds;
+    }
+    if (oldWidget.isRunning && !widget.isRunning) {
+      _ticker?.cancel();
+      _ticker = null;
+    } else if (!oldWidget.isRunning && widget.isRunning) {
+      _startTimer();
     }
   }
 
