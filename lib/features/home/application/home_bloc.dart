@@ -1068,6 +1068,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ));
       }
     }
+    final encodedPolyline = event.polyString.trim();
+    final shouldFetchPolyline = encodedPolyline.isEmpty;
+
     if (mapType == 'google_map') {
       if (userData!.metaRequest != null ||
           (userData!.onTripRequest != null &&
@@ -1085,12 +1088,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             event.pickLat, event.pickLng, event.stops);
       }
 
-      decodeEncodedPolyline(event.polyString);
+      if (!shouldFetchPolyline) {
+        await decodeEncodedPolyline(encodedPolyline);
+      }
     } else {
       mapBound(currentLatLng!.latitude, currentLatLng!.longitude, event.pickLat,
           event.pickLng, event.stops);
 
-      decodeEncodedPolyline(event.polyString);
+      if (!shouldFetchPolyline) {
+        await decodeEncodedPolyline(encodedPolyline);
+      }
       double lat = (event.pickLat + event.dropLat) / 2;
       double lon = (event.pickLng + event.dropLng) / 2;
       var val = LatLng(lat, lon);
@@ -1102,11 +1109,27 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     //     time: double.parse(event.duration));
 
     // Convert KM to Meters (since addDistanceMarker expects meters)
-    double distanceInMeters = double.parse(event.distance) * 1000;
-
-    await addDistanceMarker(LatLng(event.dropLat, event.dropLng),
-        distanceInMeters, // Now passing 7760.0 instead of 7.76
-        time: double.parse(event.duration));
+    if (shouldFetchPolyline) {
+      add(PolylineEvent(
+        pickLat: event.pickLat,
+        pickLng: event.pickLng,
+        dropLat: event.dropLat,
+        dropLng: event.dropLng,
+        stops: event.stops,
+        packageName: AppConstants.packageName,
+        signKey: AppConstants.signKey,
+        pickAddress: event.pickAddress,
+        dropAddress: event.dropAddress,
+        isTripEndCall: false,
+      ));
+    } else {
+      final distanceInMeters = (double.tryParse(event.distance) ?? 0) * 1000;
+      await addDistanceMarker(
+        LatLng(event.dropLat, event.dropLng),
+        distanceInMeters,
+        time: double.tryParse(event.duration) ?? 0,
+      );
+    }
 
     add(ShowoutsationpageEvent(isVisible: false));
     acceptedRideFare = event.acceptedRideFare;

@@ -43,6 +43,48 @@ class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
     return ((parsed * 10).round() / 10).toStringAsFixed(2);
   }
 
+  String _rideInstruction(Map ride) {
+    const pickupKeys = [
+      'pick_poc_instruction',
+      'pickup_poc_instruction',
+      'pickPocInstruction',
+      'pickupPocInstruction',
+      'taxi_instruction',
+    ];
+    const dropoffKeys = [
+      'drop_poc_instruction',
+      'dropoff_poc_instruction',
+      'dropPocInstruction',
+      'dropoffPocInstruction',
+    ];
+
+    String firstInstruction(List<String> keys) {
+      for (final key in keys) {
+        final instruction = ride[key]?.toString().trim() ?? '';
+        if (instruction.isNotEmpty && instruction.toLowerCase() != 'null') {
+          return instruction;
+        }
+      }
+      return '';
+    }
+
+    final pickup = firstInstruction(pickupKeys);
+    final dropoff = firstInstruction(dropoffKeys);
+    if (pickup.isNotEmpty && dropoff.isNotEmpty && pickup != dropoff) {
+      return '$pickup • $dropoff';
+    }
+    if (pickup.isNotEmpty) return pickup;
+    if (dropoff.isNotEmpty) return dropoff;
+
+    for (final key in const ['instruction', 'instructions']) {
+      final instruction = ride[key]?.toString().trim() ?? '';
+      if (instruction.isNotEmpty && instruction.toLowerCase() != 'null') {
+        return instruction;
+      }
+    }
+    return '';
+  }
+
   void _scheduleChipScroll(int index, int total) {
     if (total <= 1) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -449,6 +491,8 @@ class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
                                   children: homeBloc.rideList
                                       .asMap()
                                       .map((key, value) {
+                                        final rideInstruction =
+                                            _rideInstruction(value);
                                         final List preferenceIcons =
                                             homeBloc.rideList[key]
                                                     ['preferences_icon'] ??
@@ -827,9 +871,7 @@ class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
                                                 ),
                                                 if (preferenceIcons
                                                         .isNotEmpty ||
-                                                    homeBloc.rideList[key][
-                                                            'pick_poc_instruction'] !=
-                                                        '')
+                                                    rideInstruction.isNotEmpty)
                                                   const SizedBox(height: 12),
                                                 if (preferenceIcons
                                                     .isNotEmpty) ...[
@@ -860,9 +902,8 @@ class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
                                                   ),
                                                   const SizedBox(height: 8),
                                                 ],
-                                                if (homeBloc.rideList[key][
-                                                        'pick_poc_instruction'] !=
-                                                    '') ...[
+                                                if (rideInstruction
+                                                    .isNotEmpty) ...[
                                                   Row(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
@@ -882,10 +923,7 @@ class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
                                                       ),
                                                       Expanded(
                                                         child: MyText(
-                                                          text: homeBloc
-                                                              .rideList[key][
-                                                                  'pick_poc_instruction']
-                                                              .toString(),
+                                                          text: rideInstruction,
                                                           textStyle: TextStyle(
                                                             fontSize: 13,
                                                             color: isDark
@@ -977,7 +1015,7 @@ class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
                                                               pickAddress: homeBloc.rideList[key]['pick_address'] ?? '',
                                                               dropAddress: homeBloc.rideList[key]['drop_address'] ?? '',
                                                               acceptedRideFare: homeBloc.rideList[key]['price'] ?? '0',
-                                                              polyString: homeBloc.rideList[key]['polyline'] ?? '',
+                                                              polyString: (homeBloc.rideList[key]['polyline'] ?? homeBloc.rideList[key]['poly_line'] ?? '').toString(),
                                                               distance: homeBloc.rideList[key]['distance'] ?? '0',
                                                               duration: homeBloc.rideList[key]['duration'] ?? '0',
                                                               isOutstationRide: false,
