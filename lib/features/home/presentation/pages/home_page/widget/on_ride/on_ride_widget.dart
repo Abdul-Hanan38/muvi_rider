@@ -118,7 +118,10 @@ class OnRideWidget extends StatelessWidget {
                       ),
                       if (userData!.onTripRequest!.arrivedAt != null &&
                           userData!.onTripRequest!.isBidRide == "0" &&
-                          !userData!.onTripRequest!.isRental) ...[
+                          !userData!.onTripRequest!.isRental &&
+                          !(userData!.onTripRequest!.transportType ==
+                                  'delivery' &&
+                              userData!.onTripRequest!.isTripStart == 1)) ...[
                         const SizedBox(height: 16),
                         Container(
                           padding: const EdgeInsets.symmetric(
