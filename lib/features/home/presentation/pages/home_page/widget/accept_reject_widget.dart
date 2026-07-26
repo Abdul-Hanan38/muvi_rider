@@ -686,7 +686,7 @@ class AcceptRejectWidget extends StatelessWidget {
                                               overflow: TextOverflow.ellipsis,
                                             ),
 
-                                            // 🚀 NEW INLINE INSTRUCTIONS BLOCK:
+                                            //  NEW INLINE INSTRUCTIONS BLOCK:
                                             if (instructionText.isNotEmpty) ...[
                                               const SizedBox(height: 6),
                                               Container(

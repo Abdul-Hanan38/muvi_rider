@@ -36,8 +36,8 @@ class BiddingRequestWidget extends StatelessWidget {
 
           double rawPrice = 0.0;
           final Map rideData = homeBloc.rideList.isNotEmpty
-              ? homeBloc.rideList.firstWhere(
-                  (e) => e['request_id'] == homeBloc.choosenRide)
+              ? homeBloc.rideList
+                  .firstWhere((e) => e['request_id'] == homeBloc.choosenRide)
               : {};
 
           String instructionFrom(List<String> keys) {
@@ -220,133 +220,136 @@ class BiddingRequestWidget extends StatelessWidget {
                             // ADDED: Instructions Section (Pickup & Dropoff)
                             // ============================================================
                             // Display pickup instruction if available
-                            if (false) Builder(builder: (context) {
-                              // Get the ride data
-                              final rideData = homeBloc.rideList.firstWhere(
-                                  (e) =>
-                                      e['request_id'] == homeBloc.choosenRide);
+                            if (false)
+                              Builder(builder: (context) {
+                                // Get the ride data
+                                final rideData = homeBloc.rideList.firstWhere(
+                                    (e) =>
+                                        e['request_id'] ==
+                                        homeBloc.choosenRide);
 
-                              // // ============================================================
-                              // // DEBUG: Print all keys to see what's available
-                              // // ============================================================
-                              // print('=== RIDE DATA KEYS ===');
-                              // print(rideData.keys);
-                              // print(
-                              //     'pickPocInstruction: ${rideData['pickPocInstruction']}');
-                              // print(
-                              //     'pick_poc_instruction: ${rideData['pick_poc_instruction']}');
-                              // print(
-                              //     'dropPocInstruction: ${rideData['dropPocInstruction']}');
-                              // print(
-                              //     'drop_poc_instruction: ${rideData['drop_poc_instruction']}');
-                              // print(
-                              //     'taxi_instruction: ${rideData['taxi_instruction']}');
-                              // print('=====================');
-                              // // ============================================================
+                                // // ============================================================
+                                // // DEBUG: Print all keys to see what's available
+                                // // ============================================================
+                                // print('=== RIDE DATA KEYS ===');
+                                // print(rideData.keys);
+                                // print(
+                                //     'pickPocInstruction: ${rideData['pickPocInstruction']}');
+                                // print(
+                                //     'pick_poc_instruction: ${rideData['pick_poc_instruction']}');
+                                // print(
+                                //     'dropPocInstruction: ${rideData['dropPocInstruction']}');
+                                // print(
+                                //     'drop_poc_instruction: ${rideData['drop_poc_instruction']}');
+                                // print(
+                                //     'taxi_instruction: ${rideData['taxi_instruction']}');
+                                // print('=====================');
+                                // // ============================================================
 
-                              // Get pickup instruction - using correct field name from model
-                              String pickupInstruction =
-                                  rideData['pickPocInstruction'] ?? '';
+                                // Get pickup instruction - using correct field name from model
+                                String pickupInstruction =
+                                    rideData['pickPocInstruction'] ?? '';
 
-                              // If not found, try alternative field names
-                              if (pickupInstruction.isEmpty) {
-                                pickupInstruction =
-                                    rideData['pick_poc_instruction'] ?? '';
-                              }
-                              if (pickupInstruction.isEmpty) {
-                                pickupInstruction =
-                                    rideData['taxi_instruction'] ?? '';
-                              }
+                                // If not found, try alternative field names
+                                if (pickupInstruction.isEmpty) {
+                                  pickupInstruction =
+                                      rideData['pick_poc_instruction'] ?? '';
+                                }
+                                if (pickupInstruction.isEmpty) {
+                                  pickupInstruction =
+                                      rideData['taxi_instruction'] ?? '';
+                                }
 
-                              // Get dropoff instruction - using correct field name from model
-                              String dropoffInstruction =
-                                  rideData['dropPocInstruction'] ?? '';
-                              if (dropoffInstruction.isEmpty) {
-                                dropoffInstruction =
-                                    rideData['drop_poc_instruction'] ?? '';
-                              }
+                                // Get dropoff instruction - using correct field name from model
+                                String dropoffInstruction =
+                                    rideData['dropPocInstruction'] ?? '';
+                                if (dropoffInstruction.isEmpty) {
+                                  dropoffInstruction =
+                                      rideData['drop_poc_instruction'] ?? '';
+                                }
 
-                              // // Debug: Print what we found
-                              // print('=== INSTRUCTION FOUND ===');
-                              // print('Pickup Instruction: "$pickupInstruction"');
-                              // print(
-                              //     'Dropoff Instruction: "$dropoffInstruction"');
-                              // print('========================');
+                                // // Debug: Print what we found
+                                // print('=== INSTRUCTION FOUND ===');
+                                // print('Pickup Instruction: "$pickupInstruction"');
+                                // print(
+                                //     'Dropoff Instruction: "$dropoffInstruction"');
+                                // print('========================');
 
-                              // If no instructions, return empty SizedBox
-                              if (pickupInstruction.isEmpty &&
-                                  dropoffInstruction.isEmpty) {
-                                return const SizedBox.shrink();
-                              }
+                                // If no instructions, return empty SizedBox
+                                if (pickupInstruction.isEmpty &&
+                                    dropoffInstruction.isEmpty) {
+                                  return const SizedBox.shrink();
+                                }
 
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 6),
-                                  // Pickup Instruction
-                                  if (pickupInstruction.isNotEmpty) ...[
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.info_outline,
-                                          size: 14,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                        const SizedBox(width: 6),
-                                        Expanded(
-                                          child: MyText(
-                                            text: '📌 $pickupInstruction',
-                                            textStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall!
-                                                .copyWith(
-                                                  color: Theme.of(context)
-                                                      .primaryColorDark,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 6),
+                                    // Pickup Instruction
+                                    if (pickupInstruction.isNotEmpty) ...[
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(
+                                            Icons.info_outline,
+                                            size: 14,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                  // Dropoff Instruction
-                                  if (dropoffInstruction.isNotEmpty) ...[
-                                    const SizedBox(height: 4),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.info_outline,
-                                          size: 14,
-                                          color: Colors.red,
-                                        ),
-                                        const SizedBox(width: 6),
-                                        Expanded(
-                                          child: MyText(
-                                            text: '📍 $dropoffInstruction',
-                                            textStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall!
-                                                .copyWith(
-                                                  color: Theme.of(context)
-                                                      .primaryColorDark,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
+                                          const SizedBox(width: 6),
+                                          Expanded(
+                                            child: MyText(
+                                              text: '📌 $pickupInstruction',
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColorDark,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
+                                        ],
+                                      ),
+                                    ],
+                                    // Dropoff Instruction
+                                    if (dropoffInstruction.isNotEmpty) ...[
+                                      const SizedBox(height: 4),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(
+                                            Icons.info_outline,
+                                            size: 14,
+                                            color: Colors.red,
+                                          ),
+                                          const SizedBox(width: 6),
+                                          Expanded(
+                                            child: MyText(
+                                              text: '📍 $dropoffInstruction',
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColorDark,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ],
-                                ],
-                              );
-                            }),
+                                );
+                              }),
                             // ============================================================
                           ],
                         ),
@@ -647,50 +650,54 @@ class BiddingRequestWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: size.width * 0.05),
+                SizedBox(height: size.width * 0.01),
                 if (pickupInstruction.isNotEmpty ||
                     dropoffInstruction.isNotEmpty) ...[
                   Container(
-                    width: size.width * 0.9,
+                    width: size.width * 0.8,
                     padding: EdgeInsets.symmetric(
                       horizontal: size.width * 0.04,
-                      vertical: size.width * 0.03,
+                      vertical: size.width * 0.01,
                     ),
                     decoration: BoxDecoration(
-                      color: Theme.of(context)
-                          .primaryColor
-                          .withAlpha((0.08 * 255).round()),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Theme.of(context)
-                            .primaryColor
-                            .withAlpha((0.3 * 255).round()),
-                      ),
+                      color: AppColors.red.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(6),
+                      // border: Border.all(
+                      //   color: Theme.of(context)
+                      //       .primaryColor
+                      //       .withAlpha((0.3 * 255).round()),
+                      // ),
                     ),
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        MyText(
-                          text: AppLocalizations.of(context)!.instruction,
-                          textStyle:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                        const Icon(
+                          Icons.notes_rounded,
+                          size: 14,
+                          color: AppColors.red,
                         ),
                         if (pickupInstruction.isNotEmpty) ...[
-                          const SizedBox(height: 6),
+                          const SizedBox(width: 6),
                           MyText(
                             text: pickupInstruction,
                             maxLines: 5,
-                            textStyle: Theme.of(context).textTheme.bodySmall,
+                            textStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF4B5563),
+                            ),
                           ),
                         ],
                         if (dropoffInstruction.isNotEmpty) ...[
-                          const SizedBox(height: 6),
+                          const SizedBox(width: 6),
                           MyText(
                             text: dropoffInstruction,
                             maxLines: 5,
-                            textStyle: Theme.of(context).textTheme.bodySmall,
+                            textStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF4B5563),
+                            ),
                           ),
                         ],
                       ],
