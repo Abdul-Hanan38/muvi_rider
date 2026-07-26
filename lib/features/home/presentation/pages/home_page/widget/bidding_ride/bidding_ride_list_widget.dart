@@ -879,7 +879,7 @@ class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
                                                     children: [
                                                       MyText(
                                                         text:
-                                                            '${AppLocalizations.of(context)!.preferences} :- ',
+                                                            '${AppLocalizations.of(context)!.preferences} : ',
                                                         textStyle: TextStyle(
                                                           fontSize: 13,
                                                           color: isDark
@@ -911,7 +911,7 @@ class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
                                                     children: [
                                                       MyText(
                                                         text:
-                                                            '${AppLocalizations.of(context)!.instruction} :- ',
+                                                            '${AppLocalizations.of(context)!.instruction} : ',
                                                         textStyle: TextStyle(
                                                           fontSize: 13,
                                                           color: isDark
