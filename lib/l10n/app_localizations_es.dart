@@ -27,7 +27,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get continueText => 'Continuar';
 
   @override
-  String get skip => 'Saltar';
+  String get skip => 'Omitir';
 
   @override
   String get welcome => 'Bienvenido';
@@ -50,7 +50,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get terms => 'Condiciones de servicio';
 
   @override
-  String get privacy => 'política de privacidad';
+  String get privacy => 'Política de privacidad';
 
   @override
   String get selectCountry => 'Seleccione país';
@@ -115,13 +115,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get enterYourPassword => 'Introduce tu contraseña';
 
   @override
-  String get signUsingOtp => 'Inicia sesión usando un código OTP';
+  String get signUsingOtp => 'Ingresar con código';
 
   @override
   String get signUsingPassword => 'Iniciar sesión con contraseña';
 
   @override
-  String get home => 'Hogar';
+  String get home => 'Inicio';
 
   @override
   String get dashboard => 'Panel';
@@ -145,7 +145,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get inactive => 'Inactivo';
 
   @override
-  String get blocked => 'Obstruido';
+  String get blocked => 'Bloqueado';
 
   @override
   String get revenue => 'Ganancia';
@@ -154,7 +154,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get discount => 'Descuento';
 
   @override
-  String get cash => 'Dinero';
+  String get cash => 'Yape o Efectivo';
 
   @override
   String get digitalPayment => 'Pago digital';
@@ -184,7 +184,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cabPerformance => 'Rendimiento de la cabina';
 
   @override
-  String get rides => 'atracciones';
+  String get rides => 'Viajes';
 
   @override
   String get driverPerformance => 'Rendimiento del conductor';
@@ -389,13 +389,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get enterVehicleModel => 'Introduzca el modelo del vehículo';
 
   @override
-  String get provideModelYear => 'Año del modelo del vehículo';
+  String get provideModelYear => 'Año del vehículo';
 
   @override
   String get enterModelYear => 'Ingrese el año del modelo';
 
   @override
-  String get provideVehicleNumber => 'Número de vehículo';
+  String get provideVehicleNumber => 'Número de placa';
 
   @override
   String get enterVehicleNumber => 'Ingrese el número de vehículo';
@@ -407,7 +407,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get enterVehicleColor => 'Introduzca el color del vehículo';
 
   @override
-  String get submit => 'Entregar';
+  String get submit => 'Enviar';
 
   @override
   String get vehicleAddedSuccess => 'Vehículo añadido correctamente';
@@ -555,7 +555,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Por favor, introduzca su correo electrónico o número de teléfono móvil.';
 
   @override
-  String get forgotPassword => 'Has olvidado tu contraseña';
+  String get forgotPassword => 'Olvidé mi contraseña';
 
   @override
   String get noDataFound => 'No se encontraron datos.';
@@ -573,7 +573,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get subscription => 'Suscripción';
 
   @override
-  String get leaderboard => 'Tabla de clasificación';
+  String get leaderboard => 'Ranking';
 
   @override
   String get prev => 'Anterior';
@@ -643,7 +643,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get instantActivity => 'Actividad instantánea';
 
   @override
-  String get instantRide => 'Recogida en la calle';
+  String get instantRide => 'Express';
 
   @override
   String get helpCenter => 'Centro de ayuda';
@@ -707,7 +707,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rideWillCancelAutomatically =>
-      'Este viaje se cancelará automáticamente después de 1111 segundos.';
+      'Esta solicitud se cancelará automáticamente en 1111 segundos.';
 
   @override
   String get onWayToPickup => 'De camino a recoger';
@@ -716,13 +716,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cancelRide => 'Cancelar viaje';
 
   @override
-  String get arrived => 'Llegó';
+  String get arrived => 'He llegado';
 
   @override
   String get selectReasonForCancel => 'Seleccione el motivo de la cancelación.';
 
   @override
-  String get arrivedWaiting => 'Llegó, esperando al cliente.';
+  String get arrivedWaiting => 'Esperando al cliente.';
 
   @override
   String get startRide => 'Iniciar viaje';
@@ -770,7 +770,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get confirmLocation => 'Confirmar ubicación';
 
   @override
-  String get chooseGoods => 'Seleccionar productos';
+  String get chooseGoods => 'Confirmar recojo';
 
   @override
   String get loose => 'Perder';
@@ -786,7 +786,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Capturar imagen de carga de productos';
 
   @override
-  String get dispatchGoods => 'Envío de mercancías';
+  String get dispatchGoods => 'Finalizar entrega';
 
   @override
   String get getUserSignature => 'Obtener firma de usuario';
@@ -1098,7 +1098,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bidAmount => 'Importe de la puja';
 
   @override
-  String get noRequest => '¡No se aceptan peticiones por el momento!';
+  String get noRequest => 'No hay solicitudes disponibles.';
 
   @override
   String get searching => 'Búsqueda...';
@@ -1113,7 +1113,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get offlineCaps => 'DESCONECTADO';
 
   @override
-  String get waitingForUserResponse => 'Esperando respuesta del usuario';
+  String get waitingForUserResponse => 'Esperando la respuesta del usuario';
 
   @override
   String get yourOnline => 'Estás en línea';
@@ -1190,7 +1190,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get textAdd => 'Agregar';
 
   @override
-  String get textView => 'Vista';
+  String get textView => 'Ver';
 
   @override
   String get updatePaymentMethod => 'Actualizar método de pago';
@@ -1229,7 +1229,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get waitingForApprovelText =>
-      'Sus documentos están en revisión. La aprobación se otorgará en un plazo de 24 horas. Por favor, espere para comenzar a recibir sus ganancias.';
+      'Estamos revisando tus documentos. La aprobación puede tardar hasta 48 horas. Te notificaremos cuando tu cuenta esté lista para empezar a recibir pedidos.';
 
   @override
   String get diagnotics => 'Diagnóstico';
@@ -1287,7 +1287,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get onlineSmall => 'En línea';
 
   @override
-  String get offlineSmall => 'Desconectado';
+  String get offlineSmall => 'Offline';
 
   @override
   String get onrideSmall => 'En ruta';
@@ -1401,10 +1401,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rentalPackageText => 'Paquete de alquiler';
 
   @override
-  String get tripsDoneText => 'viajes realizados';
+  String get tripsDoneText => 'Viajes completados';
 
   @override
-  String get away => 'Lejos';
+  String get away => 'de distancia';
 
   @override
   String get mi => 'A MÍ';
@@ -1425,7 +1425,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mapSettings => 'Configuración del mapa';
 
   @override
-  String get sosText => 'LLAMADA DE SOCORRO';
+  String get sosText => 'Emergencia';
 
   @override
   String get webViewText => 'Vista web';
@@ -1464,7 +1464,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get done => 'Hecho';
 
   @override
-  String get signup => 'Inscribirse';
+  String get signup => 'Regístrate';
 
   @override
   String get manageFleet => 'Gestionar flota';
@@ -1764,7 +1764,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get payBysender => 'Pago por remitente';
 
   @override
-  String get payByreceiver => 'Pago por parte del receptor';
+  String get payByreceiver => 'Pago por parte del destinatario';
 
   @override
   String get instruction => 'Instrucción';
@@ -2015,7 +2015,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get activeRidesMessage => 'Tienes 2 viajes activos';
 
   @override
-  String get referral => 'Remisión';
+  String get referral => 'Referidos';
 
   @override
   String get sendCode => 'Hemos enviado un código de 6 dígitos a';
@@ -2028,7 +2028,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Por favor, introduzca su número de teléfono móvil o correo electrónico para continuar.';
 
   @override
-  String get driverConnect => 'Driver Connect';
+  String get driverConnect => 'Conectarse';
 
   @override
   String get loginAsDriver => 'Iniciar sesión como conductor';
@@ -2052,7 +2052,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get verifyOtp => 'Verificar OTP';
 
   @override
-  String get signUp => 'Inscribirse';
+  String get signUp => 'Regístrate';
 
   @override
   String get getStarted => 'Para empezar, cuéntanos un poco sobre ti.';
@@ -2097,7 +2097,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cuéntanos sobre tu vehículo para completar tu registro.';
 
   @override
-  String get reuploadDocument => 'Volver a cargar el documento';
+  String get reuploadDocument => 'Volver a subir el documento';
 
   @override
   String get selectType => 'Seleccione el tipo';
@@ -2268,7 +2268,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deliveryRental => 'Alquiler de entregas';
 
   @override
-  String get deliveryRide => 'Viaje de reparto';
+  String get deliveryRide => 'Entrega';
 
   @override
   String get scheduledRideAt => 'Viaje programado en';
@@ -2870,7 +2870,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get signupEmailAddressText => 'Dirección de correo electrónico';
 
   @override
-  String get signupEnterYourFullName => 'Ingrese su nombre completo';
+  String get signupEnterYourFullName => 'Ingrese su nombre y apellidos';
 
   @override
   String get signupPasswordSendMobileText =>
@@ -2912,7 +2912,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vehicleInfoSubText =>
-      'Todos sus documentos están verificados y actualizados.';
+      'Todos tus documentos están verificados y vigentes.';
 
   @override
   String get documentSecureAndEncryptedText =>
