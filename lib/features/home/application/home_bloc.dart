@@ -5125,6 +5125,58 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return result.toString();
   }
 
+  // Future<void> biddingFareIncreaseDecrease(
+  //     BiddingIncreaseOrDecreaseEvent event, Emitter<HomeState> emit) async {
+  //   final double step =
+  //       double.tryParse(userData!.biddingAmountIncreaseOrDecrease.toString()) ??
+  //           0.0;
+  //   final double currentVal =
+  //       double.tryParse(bidRideAmount.text.toString()) ?? 0.0;
+  //   final double baseFare = double.tryParse(acceptedRideFare) ?? 0.0;
+  //   final double highPercent =
+  //       double.tryParse(userData!.biddingHighPercentage.toString()) ?? 0.0;
+  //   final double lowPercent =
+  //       double.tryParse(userData!.biddingLowPercentage.toString()) ?? 0.0;
+
+  //   final double maxPossibleFare = baseFare + ((highPercent / 100) * baseFare);
+  //   final double minPossibleFare = baseFare - ((lowPercent / 100) * baseFare);
+
+  //   if (event.isIncrease) {
+  //     if (currentVal < maxPossibleFare) {
+  //       final double newVal = (currentVal + step <= maxPossibleFare)
+  //           ? currentVal + step
+  //           : maxPossibleFare;
+  //       bidRideAmount.text = newVal.toStringAsFixed(2);
+  //       isBiddingDecreaseLimitReach = false;
+  //       // If the new value is exactly the max possible fare, or if the next step would exceed it, disable increase
+  //       if (newVal >= maxPossibleFare || newVal + step > maxPossibleFare) {
+  //         isBiddingIncreaseLimitReach = true;
+  //       } else {
+  //         isBiddingIncreaseLimitReach = false;
+  //       }
+  //     } else {
+  //       isBiddingIncreaseLimitReach = true;
+  //     }
+  //   } else {
+  //     if (currentVal > minPossibleFare) {
+  //       final double newVal = (currentVal - step >= minPossibleFare)
+  //           ? currentVal - step
+  //           : minPossibleFare;
+  //       bidRideAmount.text = newVal.toStringAsFixed(2);
+  //       isBiddingIncreaseLimitReach = false;
+  //       // If the new value is exactly the min possible fare, or if the next step would go below it, disable decrease
+  //       if (newVal <= minPossibleFare || newVal - step < minPossibleFare) {
+  //         isBiddingDecreaseLimitReach = true;
+  //       } else {
+  //         isBiddingDecreaseLimitReach = false;
+  //       }
+  //     } else {
+  //       isBiddingDecreaseLimitReach = true;
+  //     }
+  //   }
+  //   emit(UpdateState());
+  // }
+
   Future<void> biddingFareIncreaseDecrease(
       BiddingIncreaseOrDecreaseEvent event, Emitter<HomeState> emit) async {
     final double step =
@@ -5138,40 +5190,47 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final double lowPercent =
         double.tryParse(userData!.biddingLowPercentage.toString()) ?? 0.0;
 
-    final double maxPossibleFare = baseFare + ((highPercent / 100) * baseFare);
-    final double minPossibleFare = baseFare - ((lowPercent / 100) * baseFare);
+    // 🚀 Helper for 0.10 rounding
+    double roundToNearestTenCents(double amount) {
+      return (amount * 10).round() / 10;
+    }
+
+    // 🚀 Calculate rounded limits
+    final double rawMax = baseFare + ((highPercent / 100) * baseFare);
+    final double rawMin = baseFare - ((lowPercent / 100) * baseFare);
+
+    final double maxPossibleFare = roundToNearestTenCents(rawMax);
+    final double minPossibleFare = roundToNearestTenCents(rawMin);
 
     if (event.isIncrease) {
-      if (currentVal < maxPossibleFare) {
-        final double newVal = (currentVal + step <= maxPossibleFare)
-            ? currentVal + step
-            : maxPossibleFare;
-        bidRideAmount.text = newVal.toStringAsFixed(2);
+      final double nextVal = currentVal + step;
+      if (nextVal <= maxPossibleFare) {
+        bidRideAmount.text = roundToNearestTenCents(nextVal).toStringAsFixed(2);
         isBiddingDecreaseLimitReach = false;
-        // If the new value is exactly the max possible fare, or if the next step would exceed it, disable increase
-        if (newVal >= maxPossibleFare || newVal + step > maxPossibleFare) {
+        if (double.parse(bidRideAmount.text) >= maxPossibleFare) {
           isBiddingIncreaseLimitReach = true;
         } else {
           isBiddingIncreaseLimitReach = false;
         }
       } else {
+        bidRideAmount.text = maxPossibleFare.toStringAsFixed(2);
         isBiddingIncreaseLimitReach = true;
+        isBiddingDecreaseLimitReach = false;
       }
     } else {
-      if (currentVal > minPossibleFare) {
-        final double newVal = (currentVal - step >= minPossibleFare)
-            ? currentVal - step
-            : minPossibleFare;
-        bidRideAmount.text = newVal.toStringAsFixed(2);
+      final double nextVal = currentVal - step;
+      if (nextVal >= minPossibleFare) {
+        bidRideAmount.text = roundToNearestTenCents(nextVal).toStringAsFixed(2);
         isBiddingIncreaseLimitReach = false;
-        // If the new value is exactly the min possible fare, or if the next step would go below it, disable decrease
-        if (newVal <= minPossibleFare || newVal - step < minPossibleFare) {
+        if (double.parse(bidRideAmount.text) <= minPossibleFare) {
           isBiddingDecreaseLimitReach = true;
         } else {
           isBiddingDecreaseLimitReach = false;
         }
       } else {
+        bidRideAmount.text = minPossibleFare.toStringAsFixed(2);
         isBiddingDecreaseLimitReach = true;
+        isBiddingIncreaseLimitReach = false;
       }
     }
     emit(UpdateState());

@@ -84,17 +84,43 @@ class BiddingRequestWidget extends StatelessWidget {
                 (e) => e['request_id'] == homeBloc.choosenRide)['trip_stops']);
           }
 
+          // // Force local computations to match rounded decimal constraints
+          // double total = (rawPrice * 10).round() / 10;
+          // double lowPercentage = double.parse(userData!.biddingLowPercentage);
+          // double highPercentage = double.parse(userData!.biddingHighPercentage);
+
+          // homeBloc.maxFare = (total + ((highPercentage / 100) * total));
+          // homeBloc.minFare = (total - ((lowPercentage / 100) * total));
+
+          // if (homeBloc.bidRideAmount.text.isNotEmpty) {
+          //   final double currentFare =
+          //       double.tryParse(homeBloc.bidRideAmount.text) ?? 0.0;
+          //   homeBloc.isBiddingDecreaseLimitReach =
+          //       (currentFare <= homeBloc.minFare!);
+          //   homeBloc.isBiddingIncreaseLimitReach =
+          //       (currentFare >= homeBloc.maxFare!);
+          // }
+
+          //  Helper to round to nearest 0.10
+          double roundToNearestTenCents(double amount) {
+            return (amount * 10).round() / 10;
+          }
+
           // Force local computations to match rounded decimal constraints
-          double total = (rawPrice * 10).round() / 10;
+          double total = roundToNearestTenCents(rawPrice);
           double lowPercentage = double.parse(userData!.biddingLowPercentage);
           double highPercentage = double.parse(userData!.biddingHighPercentage);
 
-          homeBloc.maxFare = (total + ((highPercentage / 100) * total));
-          homeBloc.minFare = (total - ((lowPercentage / 100) * total));
+          final double rawMax = total + ((highPercentage / 100) * total);
+          final double rawMin = total - ((lowPercentage / 100) * total);
+
+          //  Assign rounded limits to HomeBloc
+          homeBloc.maxFare = roundToNearestTenCents(rawMax);
+          homeBloc.minFare = roundToNearestTenCents(rawMin);
 
           if (homeBloc.bidRideAmount.text.isNotEmpty) {
-            final double currentFare =
-                double.tryParse(homeBloc.bidRideAmount.text) ?? 0.0;
+            final double currentFare = roundToNearestTenCents(
+                double.tryParse(homeBloc.bidRideAmount.text) ?? 0.0);
             homeBloc.isBiddingDecreaseLimitReach =
                 (currentFare <= homeBloc.minFare!);
             homeBloc.isBiddingIncreaseLimitReach =
@@ -840,28 +866,22 @@ class BiddingRequestWidget extends StatelessWidget {
                         buttonName: AppLocalizations.of(context)!.accept,
                         textSize: 18,
                         onTap: () {
-                          if ((!context
-                                      .read<HomeBloc>()
-                                      .isBiddingIncreaseLimitReach &&
-                                  !context
-                                      .read<HomeBloc>()
-                                      .isBiddingDecreaseLimitReach) ||
-                              (context
-                                      .read<HomeBloc>()
-                                      .isBiddingDecreaseLimitReach &&
-                                  (double.parse(context
-                                          .read<HomeBloc>()
-                                          .bidRideAmount
-                                          .text) >=
-                                      homeBloc.minFare!)) ||
-                              (context
-                                      .read<HomeBloc>()
-                                      .isBiddingIncreaseLimitReach &&
-                                  (double.parse(context
-                                          .read<HomeBloc>()
-                                          .bidRideAmount
-                                          .text) <=
-                                      homeBloc.maxFare!))) {
+                          double roundToNearestTenCents(double amount) {
+                            return (amount * 10).round() / 10;
+                          }
+
+                          final double typedFare = roundToNearestTenCents(
+                              double.tryParse(
+                                      homeBloc.bidRideAmount.text.trim()) ??
+                                  0.0);
+
+                          final double minAllowed =
+                              roundToNearestTenCents(homeBloc.minFare ?? 0.0);
+                          final double maxAllowed =
+                              roundToNearestTenCents(homeBloc.maxFare ?? 0.0);
+
+                          if (typedFare >= minAllowed &&
+                              typedFare <= maxAllowed) {
                             homeBloc.add(
                                 AcceptBidRideEvent(id: homeBloc.choosenRide!));
                           } else {
@@ -894,16 +914,9 @@ class BiddingRequestWidget extends StatelessWidget {
                                         children: [
                                           SizedBox(height: size.width * 0.1),
                                           MyText(
-                                            text: ((double.parse(context
-                                                            .read<HomeBloc>()
-                                                            .bidRideAmount
-                                                            .text) >=
-                                                        context
-                                                            .read<HomeBloc>()
-                                                            .minFare!) ==
-                                                    false)
-                                                ? '${AppLocalizations.of(context)!.minimumRideFareError} (${userData!.currencySymbol} ${homeBloc.minFare!.toStringAsFixed(2)})'
-                                                : '${AppLocalizations.of(context)!.maximumRideFareError} (${userData!.currencySymbol} ${homeBloc.maxFare!.toStringAsFixed(2)})',
+                                            text: (typedFare < minAllowed)
+                                                ? '${AppLocalizations.of(context)!.minimumRideFareError} (${userData!.currencySymbol} ${minAllowed.toStringAsFixed(2)})'
+                                                : '${AppLocalizations.of(context)!.maximumRideFareError} (${userData!.currencySymbol} ${maxAllowed.toStringAsFixed(2)})',
                                             maxLines: 3,
                                             textAlign: TextAlign.center,
                                             textStyle: Theme.of(context)
@@ -937,6 +950,107 @@ class BiddingRequestWidget extends StatelessWidget {
                         width: size.width * 0.41,
                         buttonColor: AppColors.primary,
                       ),
+                      // CustomButton(
+                      //   buttonName: AppLocalizations.of(context)!.accept,
+                      //   textSize: 18,
+                      //   onTap: () {
+                      //     if ((!context
+                      //                 .read<HomeBloc>()
+                      //                 .isBiddingIncreaseLimitReach &&
+                      //             !context
+                      //                 .read<HomeBloc>()
+                      //                 .isBiddingDecreaseLimitReach) ||
+                      //         (context
+                      //                 .read<HomeBloc>()
+                      //                 .isBiddingDecreaseLimitReach &&
+                      //             (double.parse(context
+                      //                     .read<HomeBloc>()
+                      //                     .bidRideAmount
+                      //                     .text) >=
+                      //                 homeBloc.minFare!)) ||
+                      //         (context
+                      //                 .read<HomeBloc>()
+                      //                 .isBiddingIncreaseLimitReach &&
+                      //             (double.parse(context
+                      //                     .read<HomeBloc>()
+                      //                     .bidRideAmount
+                      //                     .text) <=
+                      //                 homeBloc.maxFare!))) {
+                      //       homeBloc.add(
+                      //           AcceptBidRideEvent(id: homeBloc.choosenRide!));
+                      //     } else {
+                      //       showModalBottomSheet(
+                      //         context: context,
+                      //         isDismissible: true,
+                      //         isScrollControlled: true,
+                      //         enableDrag: false,
+                      //         elevation: 0,
+                      //         shape: const RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.vertical(
+                      //             top: Radius.circular(20.0),
+                      //           ),
+                      //         ),
+                      //         clipBehavior: Clip.antiAliasWithSaveLayer,
+                      //         builder: (_) {
+                      //           return BlocProvider.value(
+                      //             value: homeBloc,
+                      //             child: Container(
+                      //               width: size.width,
+                      //               decoration: const BoxDecoration(
+                      //                   borderRadius: BorderRadius.only(
+                      //                 topLeft: Radius.circular(20),
+                      //                 topRight: Radius.circular(20),
+                      //               )),
+                      //               child: Padding(
+                      //                 padding: const EdgeInsets.all(10),
+                      //                 child: Column(
+                      //                   mainAxisSize: MainAxisSize.min,
+                      //                   children: [
+                      //                     SizedBox(height: size.width * 0.1),
+                      //                     MyText(
+                      //                       text: ((double.parse(context
+                      //                                       .read<HomeBloc>()
+                      //                                       .bidRideAmount
+                      //                                       .text) >=
+                      //                                   context
+                      //                                       .read<HomeBloc>()
+                      //                                       .minFare!) ==
+                      //                               false)
+                      //                           ? '${AppLocalizations.of(context)!.minimumRideFareError} (${userData!.currencySymbol} ${homeBloc.minFare!.toStringAsFixed(2)})'
+                      //                           : '${AppLocalizations.of(context)!.maximumRideFareError} (${userData!.currencySymbol} ${homeBloc.maxFare!.toStringAsFixed(2)})',
+                      //                       maxLines: 3,
+                      //                       textAlign: TextAlign.center,
+                      //                       textStyle: Theme.of(context)
+                      //                           .textTheme
+                      //                           .bodyLarge!
+                      //                           .copyWith(
+                      //                               color: Theme.of(context)
+                      //                                   .colorScheme
+                      //                                   .error),
+                      //                     ),
+                      //                     SizedBox(height: size.width * 0.1),
+                      //                     CustomButton(
+                      //                       width: size.width,
+                      //                       buttonName:
+                      //                           AppLocalizations.of(context)!
+                      //                               .ok,
+                      //                       onTap: () {
+                      //                         Navigator.pop(context);
+                      //                       },
+                      //                     ),
+                      //                     SizedBox(height: size.width * 0.1),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           );
+                      //         },
+                      //       );
+                      //     }
+                      //   },
+                      //   width: size.width * 0.41,
+                      //   buttonColor: AppColors.primary,
+                      // ),
                       CustomButton(
                         buttonName: AppLocalizations.of(context)!.decline,
                         textSize: 18,
