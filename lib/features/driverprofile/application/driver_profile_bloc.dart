@@ -245,6 +245,8 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
           toolbarTitle: '',
           toolbarColor: AppColors.primary,
           toolbarWidgetColor: Colors.white,
+          statusBarLight: false,
+          navBarLight: false,
           activeControlsWidgetColor: AppColors.primary,
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false,
