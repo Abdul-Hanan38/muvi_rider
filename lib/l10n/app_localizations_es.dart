@@ -555,7 +555,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Por favor, introduzca su correo electrónico o número de teléfono móvil.';
 
   @override
-  String get forgotPassword => 'Olvidé mi contraseña';
+  String get forgotPassword => '¿Olvidé mi contraseña?';
 
   @override
   String get noDataFound => 'No se encontraron datos.';
@@ -722,7 +722,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get selectReasonForCancel => 'Seleccione el motivo de la cancelación.';
 
   @override
-  String get arrivedWaiting => 'Esperando al cliente.';
+  String get arrivedWaiting => 'Esperando al usuario';
 
   @override
   String get startRide => 'Iniciar viaje';
@@ -802,7 +802,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get enterRideOtpDesc =>
-      'Ingrese el código OTP que aparece en la aplicación del cliente para comenzar el viaje.';
+      'Ingrese el código OTP que aparece en la aplicación del cliente.';
 
   @override
   String get rideVerification => 'Verificación del viaje';
@@ -811,7 +811,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get shipmentVerification => 'Verificación de envío';
 
   @override
-  String get uploadShipmentProof => 'Subir comprobante de envío';
+  String get uploadShipmentProof => 'Sube una foto de la entrega';
 
   @override
   String get dropImageHere => 'Arrastra la imagen aquí';
@@ -829,7 +829,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get clearSignature => 'Firma clara';
 
   @override
-  String get pickGoods => 'Seleccionar productos';
+  String get pickGoods => 'Recoger pedido';
 
   @override
   String get complaintLengthError =>
@@ -1229,7 +1229,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get waitingForApprovelText =>
-      'Estamos revisando tus documentos. La aprobación puede tardar hasta 48 horas. Te notificaremos cuando tu cuenta esté lista para empezar a recibir pedidos.';
+      'Estamos revisando tus documentos. Este proceso puede tardar hasta 48 horas. Te notificaremos cuando tu cuenta esté lista para recibir pedidos.';
 
   @override
   String get diagnotics => 'Diagnóstico';
@@ -2021,14 +2021,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sendCode => 'Hemos enviado un código de 6 dígitos a';
 
   @override
-  String get changeNumber => 'Número de cambio';
+  String get changeNumber => 'Cambiar número';
 
   @override
   String get pleaseEnterMobileOrEmail =>
       'Por favor, introduzca su número de teléfono móvil o correo electrónico para continuar.';
 
   @override
-  String get driverConnect => 'Conectarse';
+  String get driverConnect => 'Conductor';
 
   @override
   String get loginAsDriver => 'Iniciar sesión como conductor';
@@ -2073,7 +2073,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get verifyPhone => 'Verificar teléfono';
 
   @override
-  String get verifyMobileNumber => 'Verifica tu número de teléfono móvil';
+  String get verifyMobileNumber => 'Verifica tu número de celular';
 
   @override
   String get confirmOtpNumber =>
@@ -2121,7 +2121,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fareBreakdown => 'Desglose de tarifas';
 
   @override
-  String get addProfilePhoto => 'Añade una foto de perfil';
+  String get addProfilePhoto =>
+      'Sube una foto donde se vea claramente tu rostro';
 
   @override
   String get enterNameIdOrPassport =>
@@ -2979,7 +2980,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onrideUploadProofText =>
-      'Suba una imagen clara del comprobante de envío.';
+      'Asegúrate de que la foto de la entrega sea clara y legible.';
 
   @override
   String get onrideUploadProofBrowseText => 'o toque para navegar';
