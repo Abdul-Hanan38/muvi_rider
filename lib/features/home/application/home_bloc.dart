@@ -1204,6 +1204,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           'lat': currentLatLng!.latitude,
           'lng': currentLatLng!.longitude,
           'rating': userData!.rating.toString(),
+          'trips_count': userData!.completedRideCount,
           'mobile': userData!.mobile
         }));
     emit(HomeDataLoadingStopState());

@@ -111,6 +111,7 @@ class UserDetail {
   String? totalKms;
   String? totalMinutesOnline;
   String? totalRidesTaken;
+  int completedRideCount;
   bool? hasSubscription;
   bool? isExpired;
   bool? isSubscribed;
@@ -235,6 +236,7 @@ class UserDetail {
       required this.totalKms,
       required this.totalMinutesOnline,
       required this.totalRidesTaken,
+      required this.completedRideCount,
       required this.hasSubscription,
       required this.isExpired,
       required this.isSubscribed,
@@ -391,6 +393,7 @@ class UserDetail {
       totalKms: json['total_trip_kms'].toString(),
       totalMinutesOnline: json['total_minutes_online'].toString(),
       totalRidesTaken: json['total_trips'].toString(),
+      completedRideCount: json['completed_ride_count'] ?? 0,
       hasSubscription: json['has_subsription'] ?? false,
       isExpired: json['is_expired'] ?? false,
       isSubscribed: json['is_subscribed'] ?? false,
