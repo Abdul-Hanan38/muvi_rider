@@ -405,10 +405,44 @@ class OnRideWidget extends StatelessWidget {
                               ),
                               const SizedBox(width: 12),
                               // Call and navigation action row on the right
-                              Row(
-                                children: [
-                                  if (item['phone'] != null &&
-                                      item['phone'].toString().isNotEmpty) ...[
+                              if (userData!.onTripRequest!.arrivedAt != null)
+                                Row(
+                                  children: [
+                                    if (item['phone'] != null &&
+                                        item['phone']
+                                            .toString()
+                                            .isNotEmpty) ...[
+                                      Center(
+                                        child: Container(
+                                          width: 32,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: isDark
+                                                ? const Color(0xFF1E293B)
+                                                : const Color(0xFFEFF6FF),
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {
+                                              context.read<HomeBloc>().add(
+                                                  OpenAnotherFeatureEvent(
+                                                      value:
+                                                          'tel:${item['phone']}'));
+                                            },
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.phone_enabled_outlined,
+                                                size: 16,
+                                                color: AppColors.primary,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                    ],
                                     Center(
                                       child: Container(
                                         width: 32,
@@ -420,17 +454,148 @@ class OnRideWidget extends StatelessWidget {
                                               : const Color(0xFFEFF6FF),
                                         ),
                                         child: InkWell(
-                                          onTap: () {
-                                            context.read<HomeBloc>().add(
-                                                OpenAnotherFeatureEvent(
-                                                    value:
-                                                        'tel:${item['phone']}'));
+                                          onTap: () async {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            20)),
+                                              ),
+                                              builder: (_) =>
+                                                  BlocProvider.value(
+                                                value: homeBloc,
+                                                child: SizedBox(
+                                                  width: size.width,
+                                                  height: size.width,
+                                                  child: Column(
+                                                    children: [
+                                                      const SizedBox(
+                                                          height: 20),
+                                                      MyText(
+                                                        text:
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .chooseMap,
+                                                        textStyle: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: isDark
+                                                              ? Colors.white
+                                                              : const Color(
+                                                                  0xFF1F2937),
+                                                        ),
+                                                      ),
+                                                      const Divider(),
+                                                      InkWell(
+                                                        onTap: () async {
+                                                          final current = context
+                                                              .read<HomeBloc>()
+                                                              .currentLatLng;
+                                                          if (current != null) {
+                                                            final Uri
+                                                                googleMapsUri =
+                                                                Uri.parse(
+                                                                    'https://www.google.com/maps/dir/?api=1'
+                                                                    '&origin=${current.latitude},${current.longitude}'
+                                                                    '&destination=${item['lat']},${item['lng']}');
+                                                            if (await canLaunchUrl(
+                                                                googleMapsUri)) {
+                                                              await launchUrl(
+                                                                  googleMapsUri,
+                                                                  mode: LaunchMode
+                                                                      .externalApplication);
+                                                            }
+                                                          }
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      16,
+                                                                  vertical: 12),
+                                                          child: Row(
+                                                            children: [
+                                                              Image.asset(
+                                                                  AppImages
+                                                                      .googleMaps,
+                                                                  height: 28,
+                                                                  width: 28),
+                                                              const SizedBox(
+                                                                  width: 12),
+                                                              MyText(
+                                                                text: AppLocalizations.of(
+                                                                        context)!
+                                                                    .googleMap,
+                                                                textStyle: TextStyle(
+                                                                    color: isDark
+                                                                        ? Colors
+                                                                            .white
+                                                                        : const Color(
+                                                                            0xFF1F2937)),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () async {
+                                                          final Uri wazeUri =
+                                                              Uri.parse(
+                                                                  'https://waze.com/ul?ll=${item['lat']},${item['lng']}&navigate=yes');
+                                                          if (await canLaunchUrl(
+                                                              wazeUri)) {
+                                                            await launchUrl(
+                                                                wazeUri);
+                                                          }
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      16,
+                                                                  vertical: 12),
+                                                          child: Row(
+                                                            children: [
+                                                              Image.asset(
+                                                                  AppImages
+                                                                      .wazeMap,
+                                                                  height: 28,
+                                                                  width: 28),
+                                                              const SizedBox(
+                                                                  width: 12),
+                                                              MyText(
+                                                                text: AppLocalizations.of(
+                                                                        context)!
+                                                                    .wazeMap,
+                                                                textStyle: TextStyle(
+                                                                    color: isDark
+                                                                        ? Colors
+                                                                            .white
+                                                                        : const Color(
+                                                                            0xFF1F2937)),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
                                           },
                                           borderRadius:
                                               BorderRadius.circular(16),
                                           child: const Center(
                                             child: Icon(
-                                              Icons.phone_enabled_outlined,
+                                              Icons.near_me_outlined,
                                               size: 16,
                                               color: AppColors.primary,
                                             ),
@@ -438,162 +603,8 @@ class OnRideWidget extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
                                   ],
-                                  Center(
-                                    child: Container(
-                                      width: 32,
-                                      height: 32,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: isDark
-                                            ? const Color(0xFF1E293B)
-                                            : const Color(0xFFEFF6FF),
-                                      ),
-                                      child: InkWell(
-                                        onTap: () async {
-                                          showModalBottomSheet(
-                                            context: context,
-                                            isScrollControlled: true,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                      top: Radius.circular(20)),
-                                            ),
-                                            builder: (_) => BlocProvider.value(
-                                              value: homeBloc,
-                                              child: SizedBox(
-                                                width: size.width,
-                                                height: size.width,
-                                                child: Column(
-                                                  children: [
-                                                    const SizedBox(height: 20),
-                                                    MyText(
-                                                      text: AppLocalizations.of(
-                                                              context)!
-                                                          .chooseMap,
-                                                      textStyle: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: isDark
-                                                            ? Colors.white
-                                                            : const Color(
-                                                                0xFF1F2937),
-                                                      ),
-                                                    ),
-                                                    const Divider(),
-                                                    InkWell(
-                                                      onTap: () async {
-                                                        final current = context
-                                                            .read<HomeBloc>()
-                                                            .currentLatLng;
-                                                        if (current != null) {
-                                                          final Uri
-                                                              googleMapsUri =
-                                                              Uri.parse(
-                                                                  'https://www.google.com/maps/dir/?api=1'
-                                                                  '&origin=${current.latitude},${current.longitude}'
-                                                                  '&destination=${item['lat']},${item['lng']}');
-                                                          if (await canLaunchUrl(
-                                                              googleMapsUri)) {
-                                                            await launchUrl(
-                                                                googleMapsUri,
-                                                                mode: LaunchMode
-                                                                    .externalApplication);
-                                                          }
-                                                        }
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 16,
-                                                                vertical: 12),
-                                                        child: Row(
-                                                          children: [
-                                                            Image.asset(
-                                                                AppImages
-                                                                    .googleMaps,
-                                                                height: 28,
-                                                                width: 28),
-                                                            const SizedBox(
-                                                                width: 12),
-                                                            MyText(
-                                                              text: AppLocalizations
-                                                                      .of(context)!
-                                                                  .googleMap,
-                                                              textStyle: TextStyle(
-                                                                  color: isDark
-                                                                      ? Colors
-                                                                          .white
-                                                                      : const Color(
-                                                                          0xFF1F2937)),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    InkWell(
-                                                      onTap: () async {
-                                                        final Uri wazeUri =
-                                                            Uri.parse(
-                                                                'https://waze.com/ul?ll=${item['lat']},${item['lng']}&navigate=yes');
-                                                        if (await canLaunchUrl(
-                                                            wazeUri)) {
-                                                          await launchUrl(
-                                                              wazeUri);
-                                                        }
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 16,
-                                                                vertical: 12),
-                                                        child: Row(
-                                                          children: [
-                                                            Image.asset(
-                                                                AppImages
-                                                                    .wazeMap,
-                                                                height: 28,
-                                                                width: 28),
-                                                            const SizedBox(
-                                                                width: 12),
-                                                            MyText(
-                                                              text: AppLocalizations
-                                                                      .of(context)!
-                                                                  .wazeMap,
-                                                              textStyle: TextStyle(
-                                                                  color: isDark
-                                                                      ? Colors
-                                                                          .white
-                                                                      : const Color(
-                                                                          0xFF1F2937)),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        borderRadius: BorderRadius.circular(16),
-                                        child: const Center(
-                                          child: Icon(
-                                            Icons.near_me_outlined,
-                                            size: 16,
-                                            color: AppColors.primary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
                             ],
                           ),
                         );

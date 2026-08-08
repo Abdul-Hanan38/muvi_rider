@@ -220,7 +220,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notifications => 'Notificaciones';
 
   @override
-  String get history => 'Historia';
+  String get history => 'Historial';
 
   @override
   String get vehicleInfo => 'Información del vehículo';
@@ -443,7 +443,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get basePrice => 'Precio base';
 
   @override
-  String get taxes => 'impuestos';
+  String get taxes => 'Impuestos';
 
   @override
   String get distancePrice => 'Precio de distancia';
@@ -455,7 +455,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get waitingPrice => 'Precio de espera';
 
   @override
-  String get convFee => 'Tarifa de conveniencia';
+  String get convFee => 'Tarifa por servicio';
 
   @override
   String get paymentRecieved => 'Pago recibido';
@@ -567,7 +567,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ratings => 'Calificaciones';
 
   @override
-  String get tripsTaken => 'Viajes realizados';
+  String get tripsTaken => 'viajes';
 
   @override
   String get subscription => 'Suscripción';
@@ -631,7 +631,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get continueWithoutPlanDesc =>
-      'Continuar sin un plan le hará pagar una comisión administrativa por cada viaje.';
+      'Continuar sin un plan le hará pagar una comisión por cada viaje.';
 
   @override
   String get or => 'O';
@@ -697,7 +697,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tripSummary => 'Resumen del viaje';
 
   @override
-  String get howWasYourLastRide => '¿Qué tal fue tu último viaje con el 1111?';
+  String get howWasYourLastRide => '¿Cómo te fue en tu último viaje?';
 
   @override
   String get leaveFeedback => 'Deja tu opinión (opcional)';
@@ -989,10 +989,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get totalFare => 'Tarifa total';
 
   @override
-  String get commission => 'Comisión';
+  String get commission => 'Comisión Muvi';
 
   @override
-  String get customerConvenienceFee => 'Tarifa por conveniencia del cliente';
+  String get customerConvenienceFee => 'Tarifa por servicio';
 
   @override
   String get tripEarnings => 'Ganancias del viaje';
@@ -1010,7 +1010,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rideLater => 'Viaje más tarde';
 
   @override
-  String get regular => 'Regular';
+  String get regular => 'Express';
 
   @override
   String get detailsUpdateSuccess => 'Detalles actualizados correctamente';
@@ -1110,7 +1110,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get onlineCaps => 'EN LÍNEA';
 
   @override
-  String get offlineCaps => 'DESCONECTADO';
+  String get offlineCaps => 'OFFLINE';
 
   @override
   String get waitingForUserResponse => 'Esperando la respuesta del usuario';
@@ -1321,7 +1321,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dailyCaps => 'A DIARIO';
 
   @override
-  String get levelupText => 'Elevar a mismo nivel';
+  String get levelupText => 'Sube de nivel';
 
   @override
   String get rewardsText => 'Recompensas';
@@ -1401,7 +1401,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rentalPackageText => 'Paquete de alquiler';
 
   @override
-  String get tripsDoneText => 'Viajes completados';
+  String get tripsDoneText => 'viajes realizados';
 
   @override
   String get away => 'de distancia';
@@ -1755,7 +1755,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get waitingChargeText =>
-      'Se aplica un recargo de a*/min por tiempo de espera adicional.';
+      'Se aplica un recargo de */min por tiempo de espera adicional.';
 
   @override
   String get waitingForPayment => 'Esperando el pago';
@@ -2058,7 +2058,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get getStarted => 'Para empezar, cuéntanos un poco sobre ti.';
 
   @override
-  String get fullName => 'Nombre completo';
+  String get fullName => 'Nombre y apellido';
 
   @override
   String get mobileNumber => 'Número de teléfono móvil';
@@ -2526,7 +2526,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'No hay más notificaciones que mostrar.';
 
   @override
-  String get manageYourPersonalDetailsText => 'Gestiona tus datos personales';
+  String get manageYourPersonalDetailsText =>
+      'Editar tus datos requerirá una nueva revisión';
 
   @override
   String get addProfilePhotoSubText =>
@@ -2750,7 +2751,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Transacciones seguras y cifradas';
 
   @override
-  String get profileSettingsLableText => 'Gestiona tu perfil y configuración';
+  String get profileSettingsLableText => 'Administra tu perfil';
 
   @override
   String get myVehiclesLableText =>
@@ -2773,8 +2774,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Consulte el panel de rendimiento y ganancias de la flota.';
 
   @override
-  String get benefitsLableText =>
-      'Realiza un seguimiento de tu rendimiento y ganancias.';
+  String get benefitsLableText => 'Mejora tus ingresos.';
 
   @override
   String get earningsLableText => 'Controla tus ganancias y pagos.';
@@ -2797,8 +2797,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get referralLableText => 'Invita a tus amigos y ganen juntos.';
 
   @override
-  String get preferencesLableText =>
-      'Personaliza tu experiencia con la aplicación.';
+  String get preferencesLableText => 'Personaliza tu experiencia.';
 
   @override
   String get subscriptionLableText => 'Gestiona tu plan de suscripción activo';
@@ -2817,8 +2816,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sosLableText => 'Gestionar contactos y alertas de emergencia';
 
   @override
-  String get appSettingsLableText =>
-      'Configuración de la aplicación y cierre de sesión';
+  String get appSettingsLableText => 'Configuración general';
 
   @override
   String get settingsLableText => 'Gestionar la configuración de la aplicación';
