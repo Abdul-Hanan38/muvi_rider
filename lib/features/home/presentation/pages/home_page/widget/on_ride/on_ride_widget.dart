@@ -405,7 +405,7 @@ class OnRideWidget extends StatelessWidget {
                               ),
                               const SizedBox(width: 12),
                               // Call and navigation action row on the right
-                              if (userData!.onTripRequest!.arrivedAt != null)
+                              if (userData!.onTripRequest!.isTripStart == 1)
                                 Row(
                                   children: [
                                     if (item['phone'] != null &&

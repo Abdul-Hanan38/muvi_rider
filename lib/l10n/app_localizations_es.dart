@@ -416,13 +416,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get driverAddedSuccess => 'Conductor añadido correctamente';
 
   @override
-  String get completed => 'Terminado';
+  String get completed => 'Completado';
 
   @override
   String get cancelled => 'Cancelado';
 
   @override
-  String get upcoming => 'Próximamente';
+  String get upcoming => 'Próximos';
 
   @override
   String get historyDetails => 'Detalles históricos';
@@ -579,7 +579,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get prev => 'Anterior';
 
   @override
-  String get next => 'Próximo';
+  String get next => 'Siguiente';
 
   @override
   String get complaintDetails => 'Detalles de la queja';
@@ -664,7 +664,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get enterYourPrice => 'Introduzca su precio';
 
   @override
-  String get todaysEarnings => 'Resultados de hoy';
+  String get todaysEarnings => 'Ingresos de hoy';
 
   @override
   String get ridesTaken => 'Viajes realizados';
@@ -902,7 +902,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get locationPermDesc =>
-      '111 utiliza tu ubicación en segundo plano para rastrear tus viajes y mejorar la experiencia del cliente, incluso cuando la aplicación está cerrada. Esto permite a los clientes localizarte con precisión y optimizar tus viajes.';
+      '111 necesita tu ubicación en segundo plano para dar seguimiento a tus viajes, incluso cuando la aplicación está cerrada. Esto permite a los clientes ver tu ubicación en tiempo real durante el servicio.';
 
   @override
   String get allowLocation => 'Permitir ubicación';
@@ -939,10 +939,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Para añadir clasificaciones, por favor, inicie su recorrido.';
 
   @override
-  String get googleMap => 'Mapa de Google';
+  String get googleMap => 'Google maps';
 
   @override
-  String get openstreet => 'Calle abierta';
+  String get openstreet => 'OpenStreetMap';
 
   @override
   String get clearAll => 'Borrar todo';
@@ -1125,35 +1125,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get select => 'Seleccionar';
 
   @override
-  String get incentives => 'Incentivos';
+  String get incentives => 'Bonos';
 
   @override
   String get todayCaps => 'HOY';
 
   @override
-  String get weeklyCaps => 'SEMANALMENTE';
+  String get weeklyCaps => 'SEMANALES';
 
   @override
   String get earnUptoText => 'Gana hasta';
 
   @override
-  String get byCompletingRideText => 'completando 12 recorridos';
+  String get byCompletingRideText => 'al completar 12 viajes';
 
   @override
-  String get missedIncentiveText =>
-      'Lamento que te hayas perdido este incentivo.';
+  String get missedIncentiveText => 'No alcanzaste este bono.';
 
   @override
   String get earnedIncentiveText => '¡Te has ganado el incentivo!';
 
   @override
-  String get completeText => 'Completo';
+  String get completeText => 'Meta: ';
 
   @override
   String get acheivedTargetText => '¡Has alcanzado tus objetivos con éxito!';
 
   @override
-  String get missedTargetText => '¡Fallaste! No completaste tus objetivos.';
+  String get missedTargetText => 'No alcanzaste esta meta.';
 
   @override
   String get selectDateForIncentives =>
@@ -1166,7 +1165,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get customerPays => 'El cliente paga';
 
   @override
-  String get taxText => 'Impuesto';
+  String get taxText => 'IGV';
 
   @override
   String get tripId => 'ID DE VIAJE';
@@ -1318,7 +1317,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'El incentivo de hoy no está disponible.';
 
   @override
-  String get dailyCaps => 'A DIARIO';
+  String get dailyCaps => 'DIARIOS';
 
   @override
   String get levelupText => 'Sube de nivel';
@@ -1741,7 +1740,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Por favor, active su ubicación para continuar.';
 
   @override
-  String get whyBackgroundLocation => '¿Por qué ubicación de fondo?';
+  String get whyBackgroundLocation =>
+      '¿Por qué necesitamos acceso a tu ubicación?';
 
   @override
   String get uploadedDoccumentDeclined => 'Documentos cargados rechazados';
@@ -1761,10 +1761,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get waitingForPayment => 'Esperando el pago';
 
   @override
-  String get payBysender => 'Pago por remitente';
+  String get payBysender => 'Paga el remitente';
 
   @override
-  String get payByreceiver => 'Pago por parte del destinatario';
+  String get payByreceiver => 'Paga el destinatario';
 
   @override
   String get instruction => 'Instrucción';
@@ -2126,7 +2126,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get enterNameIdOrPassport =>
-      'Por favor, introduzca su nombre tal como aparece en su documento de identidad o pasaporte.';
+      'Por favor, introduzca su nombre completo tal como aparece en su documento de identidad o pasaporte.';
 
   @override
   String get enterYourGender => 'Por favor, introduzca su género.';
@@ -2185,10 +2185,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get addContact => 'Agregar contacto';
 
   @override
-  String get firstName => 'Nombre de pila';
+  String get firstName => 'Nombre';
 
   @override
-  String get lastName => 'Apellido';
+  String get lastName => 'Apellidos';
 
   @override
   String get nameRequired => 'Se requiere el nombre';
@@ -2275,7 +2275,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get scheduledRideAt => 'Viaje programado en';
 
   @override
-  String get biddingRides => 'Subasta de atracciones';
+  String get biddingRides => 'Viajes por oferta';
 
   @override
   String get changeEmail => 'Cambiar correo electrónico';
@@ -2290,7 +2290,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get verifyEmailText => 'Verificar correo electrónico';
 
   @override
-  String get agreeTermsText => 'Estoy de acuerdo con el';
+  String get agreeTermsText => 'Estoy de acuerdo con los';
 
   @override
   String get termsAndConditions => 'Términos y condiciones';
@@ -2404,10 +2404,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get historyReturnTimeValue => 'Devolver: *****';
 
   @override
-  String get historyPickupCaps => 'LEVANTAR';
+  String get historyPickupCaps => 'ORIGEN';
 
   @override
-  String get historyDropCaps => 'GOTA';
+  String get historyDropCaps => 'DESTINO';
 
   @override
   String get noCompletedRidesText => 'No se han completado los recorridos.';
@@ -2421,7 +2421,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tus recorridos completados aparecerán aquí una vez que los termines.';
 
   @override
-  String get noUpcomingRidesText => 'No hay atracciones programadas';
+  String get noUpcomingRidesText => 'No hay viajes programadas';
 
   @override
   String get noUpcomingRidesTextSubTitle =>
@@ -2450,7 +2450,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get incentiveCompleteMoreRidesText =>
-      'Completa más viajes para desbloquear atractivos incentivos.';
+      'Completa más entregas para desbloquear nuevos bonos.';
 
   @override
   String get topEarnersText => 'Los que más ganan';
@@ -2545,7 +2545,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rewardsHowItWorksPointOneText =>
-      'Completa atracciones y actividades para ganar puntos.';
+      'Completa viajes para ganar puntos.';
 
   @override
   String get rewardsHowItWorksPointTwo => '2. Acumula puntos';
@@ -2774,7 +2774,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Consulte el panel de rendimiento y ganancias de la flota.';
 
   @override
-  String get benefitsLableText => 'Mejora tus ingresos.';
+  String get benefitsLableText => 'Mejora tus ingresos';
 
   @override
   String get earningsLableText => 'Controla tus ganancias y pagos.';
@@ -2797,7 +2797,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get referralLableText => 'Invita a tus amigos y ganen juntos.';
 
   @override
-  String get preferencesLableText => 'Personaliza tu experiencia.';
+  String get preferencesLableText => 'Personaliza tu experiencia';
 
   @override
   String get subscriptionLableText => 'Gestiona tu plan de suscripción activo';
@@ -2943,7 +2943,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chooseMaxDistanceText =>
-      'Elige la distancia máxima que deseas ver atracciones.';
+      'Elige la distancia máxima para recibir viajes.';
 
   @override
   String get biddingNotifyNewRideRequestAvailbleText =>
@@ -3039,7 +3039,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get increaseYourEarningsText => 'para aumentar tus ingresos';
 
   @override
-  String get failedToLoadRidesText => 'No se pudieron cargar las atracciones.';
+  String get failedToLoadRidesText => 'No fue posible cargar los viajes.resu';
 
   @override
   String get noAcceptedRidesText => 'No se aceptan viajes';
