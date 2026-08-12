@@ -3093,7 +3093,4 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Selecione o seu idioma preferido';
-
-  @override
-  String get pleaseSelectImage => 'Please select image';
 }

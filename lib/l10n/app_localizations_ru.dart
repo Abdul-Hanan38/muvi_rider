@@ -3089,7 +3089,4 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Выберите предпочитаемый язык';
-
-  @override
-  String get pleaseSelectImage => 'Please select image';
 }

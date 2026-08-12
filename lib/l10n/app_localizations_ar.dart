@@ -3011,7 +3011,4 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'اختر لغتك المفضلة';
-
-  @override
-  String get pleaseSelectImage => 'Please select image';
 }

@@ -915,13 +915,13 @@ abstract class AppLocalizations {
   /// No description provided for @provideVehicleNumber.
   ///
   /// In en, this message translates to:
-  /// **'Vehicle number'**
+  /// **'Placa'**
   String get provideVehicleNumber;
 
   /// No description provided for @enterVehicleNumber.
   ///
   /// In en, this message translates to:
-  /// **'Enter Vehicle Number'**
+  /// **'Placa'**
   String get enterVehicleNumber;
 
   /// No description provided for @provideVehicleColor.
@@ -1311,7 +1311,7 @@ abstract class AppLocalizations {
   /// No description provided for @vehicleNumber.
   ///
   /// In en, this message translates to:
-  /// **'Vehicle Number'**
+  /// **'Placa'**
   String get vehicleNumber;
 
   /// No description provided for @vehicleColor.
@@ -1881,7 +1881,7 @@ abstract class AppLocalizations {
   /// No description provided for @locationPermDesc.
   ///
   /// In en, this message translates to:
-  /// **'111 uses your background location to track your trips and enhance the customer experience, even when the app is closed. It allows customers to locate you accurately and optimize your rides.'**
+  /// **'Muvi utiliza tu ubicación en segundo plano para rastrear tus viajes y mejorar la experiencia del cliente, incluso cuando la aplicación esté cerrada. Esto permite que los clientes te localicen con precisión y optimiza tus viajes.'**
   String get locationPermDesc;
 
   /// No description provided for @allowLocation.
@@ -3213,7 +3213,7 @@ abstract class AppLocalizations {
   /// No description provided for @yourDriverIsText.
   ///
   /// In en, this message translates to:
-  /// **'Your Driver is'**
+  /// **'Tu conductor es'**
   String get yourDriverIsText;
 
   /// No description provided for @demoOtpText.
@@ -3459,7 +3459,7 @@ abstract class AppLocalizations {
   /// No description provided for @whyBackgroundLocation.
   ///
   /// In en, this message translates to:
-  /// **'Why Background Location?'**
+  /// **'¿Por qué ubicación en segundo plano?'**
   String get whyBackgroundLocation;
 
   /// No description provided for @uploadedDoccumentDeclined.
@@ -4011,7 +4011,7 @@ abstract class AppLocalizations {
   /// No description provided for @driverConnect.
   ///
   /// In en, this message translates to:
-  /// **'Muvi Conductor'**
+  /// **'Driver Connect'**
   String get driverConnect;
 
   /// No description provided for @loginAsDriver.
@@ -5933,12 +5933,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select your preferred language'**
   String get chooseLanguageSubText;
-
-  /// No description provided for @pleaseSelectImage.
-  ///
-  /// In en, this message translates to:
-  /// **'Please select image'**
-  String get pleaseSelectImage;
 }
 
 class _AppLocalizationsDelegate

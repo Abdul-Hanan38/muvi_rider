@@ -3039,7 +3039,4 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Chọn ngôn ngữ bạn muốn sử dụng';
-
-  @override
-  String get pleaseSelectImage => 'Please select image';
 }

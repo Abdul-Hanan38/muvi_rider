@@ -3052,7 +3052,4 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Chagua lugha unayopendelea';
-
-  @override
-  String get pleaseSelectImage => 'Please select image';
 }

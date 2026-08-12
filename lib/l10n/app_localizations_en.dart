@@ -393,10 +393,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterModelYear => 'Enter model year';
 
   @override
-  String get provideVehicleNumber => 'Vehicle number';
+  String get provideVehicleNumber => 'Placa';
 
   @override
-  String get enterVehicleNumber => 'Enter Vehicle Number';
+  String get enterVehicleNumber => 'Placa';
 
   @override
   String get provideVehicleColor => 'Vehicle color';
@@ -592,7 +592,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vehicleModel => 'Vehicle Model';
 
   @override
-  String get vehicleNumber => 'Vehicle Number';
+  String get vehicleNumber => 'Placa';
 
   @override
   String get vehicleColor => 'Vehicle Color';
@@ -888,7 +888,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get locationPermDesc =>
-      '111 uses your background location to track your trips and enhance the customer experience, even when the app is closed. It allows customers to locate you accurately and optimize your rides.';
+      'Muvi utiliza tu ubicación en segundo plano para rastrear tus viajes y mejorar la experiencia del cliente, incluso cuando la aplicación esté cerrada. Esto permite que los clientes te localicen con precisión y optimiza tus viajes.';
 
   @override
   String get allowLocation => 'Allow Location';
@@ -1580,7 +1580,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payAdmin => 'Pay Admin';
 
   @override
-  String get yourDriverIsText => 'Your Driver is';
+  String get yourDriverIsText => 'Tu conductor es';
 
   @override
   String get demoOtpText => 'Login to your account with test OTP 123456';
@@ -1714,7 +1714,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Kindly turn on your location to continue.';
 
   @override
-  String get whyBackgroundLocation => 'Why Background Location?';
+  String get whyBackgroundLocation => '¿Por qué ubicación en segundo plano?';
 
   @override
   String get uploadedDoccumentDeclined => 'Uploaded Documents Declined';
@@ -1997,7 +1997,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please enter your mobile number or email to continue.';
 
   @override
-  String get driverConnect => 'Muvi Conductor';
+  String get driverConnect => 'Driver Connect';
 
   @override
   String get loginAsDriver => 'Login as Driver';
@@ -3033,7 +3033,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseLanguageSubText => 'Select your preferred language';
-
-  @override
-  String get pleaseSelectImage => 'Please select image';
 }
