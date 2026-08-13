@@ -2850,7 +2850,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get loginToContinueText => 'Inicia sesión para continuar';
 
   @override
-  String get logincontinueWithOthersText => 'o continuar con';
+  String get logincontinueWithOthersText => '-';
 
   @override
   String get loginVerifyText => 'VERIFICAR';
@@ -2869,7 +2869,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get signupEmailAddressText => 'Dirección de correo electrónico';
 
   @override
-  String get signupEnterYourFullName => 'Ingrese su nombre y apellidos';
+  String get signupEnterYourFullName => 'Ingrese su nombre y apellido';
 
   @override
   String get signupPasswordSendMobileText =>
