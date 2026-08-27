@@ -9,6 +9,9 @@ import 'package:restart_tagxi/features/home/application/home_bloc.dart';
 import 'package:restart_tagxi/core/utils/custom_timer.dart';
 import 'package:restart_tagxi/l10n/app_localizations.dart';
 import '../../../../../../core/utils/custom_slider/custom_sliderbutton.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:restart_tagxi/common/app_constants.dart';
 
 class AcceptRejectWidget extends StatelessWidget {
   final BuildContext cont;
@@ -21,17 +24,44 @@ class AcceptRejectWidget extends StatelessWidget {
       value: cont.read<HomeBloc>(),
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          double dist = 0.0;
-          if (cont.read<HomeBloc>().currentLatLng != null &&
-              userData!.metaRequest != null) {
-            dist = calculateDistance(
+          Future<String> _getDriverToPickupDistance(HomeBloc homeBloc) async {
+            if (homeBloc.currentLatLng == null ||
+                userData?.metaRequest == null) {
+              return '0.0';
+            }
+
+            final origin =
+                '${homeBloc.currentLatLng!.latitude},${homeBloc.currentLatLng!.longitude}';
+            final dest =
+                '${userData!.metaRequest!.pickLat},${userData!.metaRequest!.pickLng}';
+
+            try {
+              final response = await http.get(Uri.parse(
+                'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$dest&mode=driving&key=${AppConstants.mapKey}',
+              ));
+
+              if (response.statusCode == 200) {
+                final data = json.decode(response.body);
+                if ((data['routes'] as List).isNotEmpty) {
+                  return data['routes'][0]['legs'][0]['distance']
+                      ['text']; // Returns e.g. "4.6 km"
+                }
+              }
+            } catch (e) {
+              debugPrint("Error fetching driver pickup distance: $e");
+            }
+
+            // Fallback to Haversine if API fails
+            final fallbackDist = calculateDistance(
               lat1: userData!.metaRequest!.pickLat,
               lon1: userData!.metaRequest!.pickLng,
-              lat2: cont.read<HomeBloc>().currentLatLng!.latitude,
-              lon2: cont.read<HomeBloc>().currentLatLng!.longitude,
+              lat2: homeBloc.currentLatLng!.latitude,
+              lon2: homeBloc.currentLatLng!.longitude,
               unit: userData?.distanceUnit ?? 'km',
             );
+            return '${fallbackDist.toStringAsFixed(2)} ${userData?.distanceUnit.toUpperCase() ?? 'KM'}';
           }
+
           final theme = Theme.of(context);
           final isDark = theme.brightness == Brightness.dark;
           final sheetBgColor =
@@ -448,28 +478,36 @@ class AcceptRejectWidget extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on_sharp,
-                                        size: 18,
-                                        color: isDark
-                                            ? AppColors.secondary
-                                            : AppColors.primary,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      MyText(
-                                        text:
-                                            '${dist.toStringAsFixed(2)} ${userData?.distanceUnit.toUpperCase() ?? 'KM'} ${AppLocalizations.of(context)!.away}',
-                                        textStyle: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
-                                          color: isDark
-                                              ? const Color(0xFFD1D5DB)
-                                              : const Color(0xFF374151),
-                                        ),
-                                      ),
-                                    ],
+                                  FutureBuilder<String>(
+                                    future: _getDriverToPickupDistance(
+                                        cont.read<HomeBloc>()),
+                                    builder: (context, snapshot) {
+                                      final displayDistance =
+                                          snapshot.data ?? '...';
+                                      return Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on_sharp,
+                                            size: 18,
+                                            color: isDark
+                                                ? AppColors.secondary
+                                                : AppColors.primary,
+                                          ),
+                                          const SizedBox(width: 6),
+                                          MyText(
+                                            text:
+                                                '$displayDistance ${AppLocalizations.of(context)!.away}',
+                                            textStyle: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                              color: isDark
+                                                  ? const Color(0xFFD1D5DB)
+                                                  : const Color(0xFF374151),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
                                   ),
                                   Row(
                                     children: [
