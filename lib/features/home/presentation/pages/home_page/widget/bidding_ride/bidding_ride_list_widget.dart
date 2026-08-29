@@ -12,6 +12,10 @@ import 'package:restart_tagxi/l10n/app_localizations.dart';
 
 import '../../../../../../../core/utils/functions.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:restart_tagxi/common/app_constants.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class BiddingRideListWidget extends StatefulWidget {
   final BuildContext cont;
   const BiddingRideListWidget({super.key, required this.cont});
@@ -22,6 +26,40 @@ class BiddingRideListWidget extends StatefulWidget {
 
 class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
   final ScrollController _chipScrollController = ScrollController();
+
+  Future<String> _getBiddingRoadDistance({
+    required LatLng driverLoc,
+    required double pickLat,
+    required double pickLng,
+  }) async {
+    final origin = '${driverLoc.latitude},${driverLoc.longitude}';
+    final dest = '$pickLat,$pickLng';
+
+    try {
+      final response = await http.get(Uri.parse(
+        'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$dest&mode=driving&key=${AppConstants.mapKey}',
+      ));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if ((data['routes'] as List).isNotEmpty) {
+          return data['routes'][0]['legs'][0]['distance']
+              ['text']; // e.g. "3.6 km"
+        }
+      }
+    } catch (e) {
+      debugPrint("Bidding road distance error: $e");
+    }
+
+    final fallbackDist = calculateDistance(
+      lat1: driverLoc.latitude,
+      lon1: driverLoc.longitude,
+      lat2: pickLat,
+      lon2: pickLng,
+      unit: userData?.distanceUnit ?? 'km',
+    );
+    return '${fallbackDist.toStringAsFixed(2)} ${userData?.distanceUnit.toUpperCase() ?? 'KM'}';
+  }
 
   double _parseDistance(dynamic value) {
     if (value is num) return value.toDouble();
@@ -726,17 +764,49 @@ class _BiddingRideListWidgetState extends State<BiddingRideListWidget> {
                                                         ),
                                                         const SizedBox(
                                                             height: 4),
-                                                        MyText(
-                                                          text:
-                                                              '${dist.toStringAsFixed(2)} ${userData?.distanceUnit.toUpperCase() ?? 'KM'} ${AppLocalizations.of(context)!.away}',
-                                                          textStyle:
-                                                              const TextStyle(
-                                                            fontSize: 11,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: AppColors
-                                                                .primary,
+                                                        FutureBuilder<String>(
+                                                          future:
+                                                              _getBiddingRoadDistance(
+                                                            driverLoc: LatLng(
+                                                              homeBloc
+                                                                  .currentLatLng!
+                                                                  .latitude,
+                                                              homeBloc
+                                                                  .currentLatLng!
+                                                                  .longitude,
+                                                            ),
+                                                            pickLat: (homeBloc.rideList[
+                                                                            key]
+                                                                        [
+                                                                        'pick_lat']
+                                                                    as num)
+                                                                .toDouble(),
+                                                            pickLng: (homeBloc.rideList[
+                                                                            key]
+                                                                        [
+                                                                        'pick_lng']
+                                                                    as num)
+                                                                .toDouble(),
                                                           ),
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            final displayDist =
+                                                                snapshot.data ??
+                                                                    '${dist.toStringAsFixed(2)} ${userData?.distanceUnit.toUpperCase() ?? 'KM'}';
+                                                            return MyText(
+                                                              text:
+                                                                  '$displayDist ${AppLocalizations.of(context)!.away}',
+                                                              textStyle:
+                                                                  const TextStyle(
+                                                                fontSize: 11,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color: AppColors
+                                                                    .primary,
+                                                              ),
+                                                            );
+                                                          },
                                                         ),
                                                       ],
                                                     ),
