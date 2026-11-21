@@ -38,7 +38,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Encoded app id from firebase</string>
+				<string>app-1-43355585191-ios-37846a47b95b76d9a8f982</string>
 			</array>
 		</dict>
 	</array>
@@ -75,14 +75,13 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Program requires GPS to track cars and get ride</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow access to microphone</string>
+	<string>Muvi Conductor only requests microphone access if the secure in-app payment or wallet checkout page you are using requires it for identity or audio/video verification during a payment. We do not access or record your microphone at any other time.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow access to photo library to pick photos for updating documents and profile pictures</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>audio</string>
 		<string>fetch</string>
 		<string>location</string>
 		<string>processing</string>

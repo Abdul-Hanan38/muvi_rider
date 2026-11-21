@@ -130,16 +130,17 @@ class _LoaderPageState extends State<LoaderPage> with WidgetsBindingObserver {
                               )
                             : (context.read<LoaderBloc>().locationApproved ==
                                     false)
-                                ? Column(
+                                ? SingleChildScrollView(
+                                    child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Image.asset(
                                         AppImages.locationImage,
                                         width: size.width * 0.9,
-                                        height: size.width * 0.9,
+                                        height: size.height * 0.35,
                                         fit: BoxFit.contain,
                                       ),
-                                      SizedBox(height: size.width * 0.05),
+                                      SizedBox(height: size.height * 0.025),
                                       SizedBox(
                                         width: size.width * 0.9,
                                         child: MyText(
@@ -155,7 +156,7 @@ class _LoaderPageState extends State<LoaderPage> with WidgetsBindingObserver {
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
-                                      SizedBox(height: size.width * 0.05),
+                                      SizedBox(height: size.height * 0.025),
                                       SizedBox(
                                         width: size.width * 0.9,
                                         child: MyText(
@@ -174,8 +175,8 @@ class _LoaderPageState extends State<LoaderPage> with WidgetsBindingObserver {
                                           maxLines: 10,
                                         ),
                                       ),
-                                      SizedBox(height: size.width * 0.05),
-                                      SizedBox(height: size.width * 0.2),
+                                      SizedBox(height: size.height * 0.025),
+                                      SizedBox(height: size.height * 0.05),
                                       CustomButton(
                                         buttonName:
                                             AppLocalizations.of(context)!
@@ -196,7 +197,7 @@ class _LoaderPageState extends State<LoaderPage> with WidgetsBindingObserver {
                                         },
                                       )
                                     ],
-                                  )
+                                  ))
                                 : Container(),
                       ),
                     ),
